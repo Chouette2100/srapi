@@ -154,7 +154,7 @@ func ApiUserLogin(
 		status = -2
 		return
 	}
-	log.Printf("resp.Body=%s\n", bufstr)
+	//	log.Printf("resp.Body=%s\n", bufstr)
 	return
 
 }
@@ -203,7 +203,7 @@ func ApiActivefanNextlevel(
 	values.Add("room_id", roomid)
 	values.Add("ym", time.Now().Format("200601"))
 
-	log.Printf("values=%+v\n", values)
+	//	log.Printf("values=%+v\n", values)
 
 	// Request を生成
 	req, err := http.NewRequest("GET", u.String(), nil)
