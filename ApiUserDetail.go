@@ -5,6 +5,7 @@ https://opensource.org/licenses/mit-license.php
 
 
 Ver. 0.0.0
+Ver. 0.1.0 リスナー情報 UserDetail にエラーに関するメンバーを追加する（作成済みのプログラムに影響はない）
 
 */
 package srapi
@@ -16,9 +17,15 @@ import (
 	"net/url"
 )
 
+//	リスナー情報
 type UserDetail struct {
-	User_id	int	//	ユーザーID＝リスナーの識別子
-	Name 	string	//	ユーザー名＝リスナー名
+	User_id int    //	ユーザーID＝リスナーの識別子
+	Name    string //	ユーザー名＝リスナー名
+	Errors  []struct {
+		Error_user_msg string	//	エラーメッセージ
+		Message        string	//	エラー内容
+		Code           int		//	エラーコード
+	}
 }
 
 //	（ログインしている）リスナーの情報を取得する
@@ -52,6 +59,8 @@ func ApiUserDetail(
 		status = -3
 		return
 	}
+
+	log.Printf("userdetail: %+v\n", userdetail)
 
 	return
 }
