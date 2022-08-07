@@ -10,10 +10,11 @@ Ver. 0.0.1 s.Find()のセレクタの冗長部分を削除する。
 package srapi
 
 import (
-	"github.com/PuerkitoBio/goquery"
-	"log"
+	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 //	フォローしているルームのデータの構造体（必要とするものだけ、残りは取得していません）
@@ -30,18 +31,16 @@ func CrwlFollow(
 	maxnoroom int, //	取得するルーム数（99999とかしていれば全部取得）
 ) (
 	rooms *[]RoomFollowing,
-	status int,
+	err error,
 ) {
 
 	var doc *goquery.Document
 
-	status = 0
-
 	turl := "https://www.showroom-live.com/follow"
 	u, err := url.Parse(turl)
 	if err != nil {
-		log.Printf("url.Parse() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("url.Parse: %w", err)
+		return nil, err
 	}
 
 	// クエリを組み立て
@@ -51,8 +50,8 @@ func CrwlFollow(
 	// Request を生成
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
-		log.Printf("http.NewRequst() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("http.NewRequest: %w", err)
+		return nil, err
 	}
 
 	// 組み立てたクエリを生クエリ文字列に変換して設定
@@ -65,8 +64,8 @@ func CrwlFollow(
 	// http.Response型のポインタ（とerror）が返ってくる
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("client.Do() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("client.Do: %w", err)
+		return nil, err
 	}
 	defer resp.Body.Close()
 
@@ -75,9 +74,8 @@ func CrwlFollow(
 	//	APIと違って（JSONではなく）単にHTMLを返してくるので、goqueryでパースします。
 	doc, err = goquery.NewDocumentFromReader(resp.Body) //	NewDocument()を使うのは現在非推奨になっています。
 	if err != nil {
-		log.Printf("GetRoomsFollowing() goquery.NewDocumentFromReader() err=<%s>.\n", err.Error())
-		status = 1
-		return
+		err = fmt.Errorf("NewDocumentFromReade: %w", err)
+		return nil, err
 	}
 	defer resp.Body.Close()
 
@@ -119,5 +117,5 @@ func CrwlFollow(
 
 	})
 
-	return
+	return rooms, nil
 }

@@ -4,12 +4,13 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0 srapi.goから分離する。
+Ver. 1.0.0 戻り値 status を err に変更する。
 
 */
 package srapi
 
 import (
-	"log"
+	"fmt"
 
 	"encoding/json"
 	"net/http"
@@ -26,13 +27,18 @@ type CsrfToken struct {
 }
 
 //	csrf_tokenを取得する。
-func ApiCsrftoken(client *http.Client) (csrftoken string) {
+func ApiCsrftoken(
+	client *http.Client, //	HTTPクライアント
+) (
+	csrftoken string, //	csrf_token
+	err error, //	エラー
+) {
 
 	turl := "https://www.showroom-live.com/api/csrf_token"
 	u, err := url.Parse(turl)
 	if err != nil {
-		log.Printf("url.Parse() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("url.Parse: %w", err)
+		return csrftoken, err
 	}
 
 	// クエリを組み立て
@@ -42,8 +48,8 @@ func ApiCsrftoken(client *http.Client) (csrftoken string) {
 	// Request を生成
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
-		log.Printf("http.NewRequst() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("http.NewRequest: %w", err)
+		return csrftoken, err
 	}
 
 	// 組み立てたクエリを生クエリ文字列に変換して設定
@@ -56,20 +62,20 @@ func ApiCsrftoken(client *http.Client) (csrftoken string) {
 	// http.Response型のポインタ（とerror）が返ってくる
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("client.Do() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("client.Do: %w", err)
+		return csrftoken, err
 	}
 
 	// 関数を抜ける際に接続を切断し、リソースを解放するため必ずresponse.Bodyをcloseする
 	defer resp.Body.Close()
 
 	var ct CsrfToken
-	if err := json.NewDecoder(resp.Body).Decode(&ct); err != nil {
-		log.Printf("json.NewDecoder() returned error %s\n", err.Error())
-		return
+	if err = json.NewDecoder(resp.Body).Decode(&ct); err != nil {
+		err = fmt.Errorf("json.NewDecoder: %w", err)
+		return csrftoken, err
 	}
 	csrftoken = ct.Csrf_token
 
-	return
+	return csrftoken, nil
 
 }

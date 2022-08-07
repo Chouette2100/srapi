@@ -5,12 +5,13 @@ https://opensource.org/licenses/mit-license.php
 
 
 Ver. 0.1.0 ApiLiveCurrentUser.goをsrapi.goから分離する。ApiLiveCurrentUser()のRoomIDをstring型に変更する。
+Ver. 1.0.0 戻り値 status を err に変更する。
 
 */
 package srapi
 
 import (
-	"log"
+	"fmt"
 
 	"encoding/json"
 	"net/http"
@@ -39,28 +40,26 @@ func ApiLiveCurrentUser(
 	roomid string, //	配信者ID
 ) (
 	livecurrentuser LiveCurrentUser, //	配信者ルームにおけるリスナーの情報
-	status int, //	0: 正常終了
+	err error, //	エラー情報
 ) {
-
-	status = 0
 
 	turl := "https://www.showroom-live.com/api/live/current_user?room_id=" + roomid
 	u, err := url.Parse(turl)
 	if err != nil {
-		log.Printf("url.Parse() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("url.Parsse: %w", err)
+		return livecurrentuser, err
 	}
 	resp, err := client.Get(u.String())
 	if err != nil {
-		log.Printf("client.Get() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("client.Get: %w", err)
+		return livecurrentuser, err
 	}
 	defer resp.Body.Close()
 
-	if err := json.NewDecoder(resp.Body).Decode(&livecurrentuser); err != nil {
-		log.Printf("json.NewDecoder() returned error %s\n", err.Error())
-		return
+	if err = json.NewDecoder(resp.Body).Decode(&livecurrentuser); err != nil {
+		err = fmt.Errorf("json.NewDecoder: %w", err)
+		return livecurrentuser, err
 	}
 
-	return
+	return livecurrentuser, nil
 }

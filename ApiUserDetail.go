@@ -7,13 +7,14 @@ https://opensource.org/licenses/mit-license.php
 Ver. 0.0.0
 Ver. 0.1.0 リスナー情報 UserDetail にエラーに関するメンバーを追加する（作成済みのプログラムに影響はない）
 Ver. 1.0.0 戻り値の staus を error 変更する
+Ver. 1.1.0 err に fmt.Errorf("package.Function: %w", err) を設定する。
 
 */
 package srapi
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
 	"net/url"
 )
@@ -47,19 +48,19 @@ func ApiUserDetail(
 	turl := "https://www.showroom-live.com/api/user/detail"
 	u, err := url.Parse(turl)
 	if err != nil {
-		log.Printf("url.Parse() returned error %s\n", err.Error())
+		err = fmt.Errorf("url.Parsse: %w", err)
 		return nil, err
 	}
 	resp, err := client.Get(u.String())
 	if err != nil {
-		log.Printf("client.Get() returned error %s\n", err.Error())
+		err = fmt.Errorf("client.Get: %w", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	userdetail = new(UserDetail)
 	if err := json.NewDecoder(resp.Body).Decode(userdetail); err != nil {
-		log.Printf("json.NewDecoder() returned error %s\n", err.Error())
+		err = fmt.Errorf("json.NewDecoder: %w", err)
 		return nil, err
 	}
 

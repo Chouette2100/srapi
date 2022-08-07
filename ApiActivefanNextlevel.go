@@ -4,12 +4,13 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0 srapi.goから分離する。
+Ver. 1.0.0 戻り値 status を err に変更する。
 
 */
 package srapi
 
 import (
-	"log"
+	"fmt"
 	"time"
 
 	"net/http"
@@ -43,17 +44,14 @@ func ApiActivefanNextlevel(
 	roomid string, //	配信ルームの識別子（プロフィールやファンルームのURLの最後にある6桁程度の数）
 ) (
 	afnl ActiveFanNextLevel, //	ファンレベルの進捗状況の詳細
-	status int, //	実行結果	0: 正常
+	err error, //	エラー情報
 ) {
-
-	status = 0
 
 	turl := "https://www.showroom-live.com/api/active_fan/next_level"
 	u, err := url.Parse(turl)
 	if err != nil {
-		log.Printf("ApiActivefanNextlevel() url.Parse() returned error %s\n", err.Error())
-		status = 1
-		return
+		err = fmt.Errorf("url.Parse: %w", err)
+		return afnl, err
 	}
 
 	// クエリを組み立て
@@ -67,9 +65,8 @@ func ApiActivefanNextlevel(
 	// Request を生成
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
-		log.Printf("ApiActivefanNextlevel() http.NewRequst() returned error %s\n", err.Error())
-		status = 2
-		return
+		err = fmt.Errorf("http.NewRequest: %w", err)
+		return afnl, err
 	}
 
 	// 組み立てたクエリを生クエリ文字列に変換して設定
@@ -82,20 +79,18 @@ func ApiActivefanNextlevel(
 	// http.Response型のポインタ（とerror）が返ってくる
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("ApiActivefanNextlevel() client.Do() returned error %s\n", err.Error())
-		status = 3
-		return
+		err = fmt.Errorf("client.Do: %w", err)
+		return afnl, err
 	}
 
 	// 関数を抜ける際に接続を切断し、リソースを解放するため必ずresponse.Bodyをcloseする
 	defer resp.Body.Close()
 
-	if err := json.NewDecoder(resp.Body).Decode(&afnl); err != nil {
-		log.Printf("json.NewDecoder() returned error %s\n", err.Error())
-		status = 4
-		return
+	if err = json.NewDecoder(resp.Body).Decode(&afnl); err != nil {
+		err = fmt.Errorf("json.NewDecoder: %w", err)
+		return afnl, err
 	}
 
-	return
+	return afnl, nil
 
 }

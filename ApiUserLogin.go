@@ -4,13 +4,14 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0 srapi.goから分離する。
+Ver. 1.0.0 戻り値の staus を error 変更する
 
 */
 package srapi
 
 import (
 	"bytes"
-	"log"
+	"fmt"
 	"strings"
 
 	"net/http"
@@ -36,17 +37,15 @@ func ApiUserLogin(
 	password string, //	ログインパスワード
 ) (
 	userlogin UserLogin, //	ログイン結果
-	status int, //	終了ステータス 0: 正常
+	err error, //	nil: 正常終了
 ) {
-
-	status = 0 //	終了ステータス
 
 	// POSTメソッド
 	turl := "https://www.showroom-live.com/user/login"
 	u, err := url.Parse(turl)
 	if err != nil {
-		log.Printf("url.Parse() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("url.Parsse: %w", err)
+		return userlogin, err
 	}
 
 	// url.Values{}でPOSTで送信する入れ物を準備
@@ -62,8 +61,8 @@ func ApiUserLogin(
 	// Request を生成
 	req, err := http.NewRequest("POST", u.String(), strings.NewReader(values.Encode()))
 	if err != nil {
-		log.Printf("http.NewRequst() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("http.NewRequest: %w", err)
+		return userlogin, err
 	}
 
 	// Content-Typeを設定
@@ -76,8 +75,8 @@ func ApiUserLogin(
 	// http.Response型のポインタ（とerror）が返ってくる
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("client.Do() returned error %s\n", err.Error())
-		return
+		err = fmt.Errorf("client.Do: %w", err)
+		return userlogin, err
 	}
 
 	// 接続を切断し、リソースを開放する。
@@ -88,12 +87,12 @@ func ApiUserLogin(
 	bufstr := buf.String()
 
 	if err := json.NewDecoder(buf).Decode(&userlogin); err != nil {
-		log.Printf("json.NewDecoder() returned error %s\n", err.Error())
-		log.Printf("resp.Body=%s\n", bufstr)
-		status = -2
-		return
+		err = fmt.Errorf("%w(resp.Body: %s)", err, bufstr)
+		err = fmt.Errorf("json.NewDecoder: %w", err)
+		
+		return userlogin, err
 	}
 	//	log.Printf("resp.Body=%s\n", bufstr)
-	return
+	return userlogin, nil
 
 }
