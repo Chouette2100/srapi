@@ -6,6 +6,7 @@ https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0
 Ver. 1.0.0 戻り値 status を err に変更する。
+Ver. 2.0.0 ExtrRoomLiveByCtg()とExtrRoomLiveByGnr()をRoomOnlivesのメソッドとする。
 
 */
 package srapi
@@ -61,6 +62,43 @@ type RoomOnlives struct {
 	Bcsvr_post int
 	Bcsvr_host string
 }
+//	指定したカテゴリー（"Free", "Official", "All"）のルーム一覧を作る。
+//	"All"のときでもGenre_idが0や700以上は含まないので重複はない。
+func (r RoomOnlives)ExtrRoomLiveByCtg(
+	tgt string, //	カテゴリ
+) (
+	roomlive *Lives, //	配信中ルーム情報
+	err error, //	エラー
+) {
+	roomlive = new(Lives)
+	for _, onlives := range r.Onlives {
+		switch {
+		case (tgt == "Free" || tgt == "All") && onlives.Genre_id == 200:
+			fallthrough
+		case (tgt == "Official" || tgt == "All") && (onlives.Genre_id >= 100 && onlives.Genre_id < 200):
+			//	log.Printf("%d %s\n", onlives.Genre_id, onlives.Genre_name)
+			*roomlive = append(*roomlive, onlives.Lives...)
+		default:
+		}
+	}
+	return	roomlive, nil
+}
+
+//	指定したジャンルのルーム一覧を作る。
+func (r RoomOnlives)ExtrRoomLiveByGnr(
+	gnr map[string]bool, //	抽出したいジャンル、mapにジャンルIDがありTrueであれば抽出する。
+) (
+	roomlive *Lives, //	配信中ルーム情報
+	err error, //	エラー
+) {
+	roomlive = new(Lives)
+	for _, onlive := range r.Onlives {
+		if ok, val := gnr[onlive.Genre_name]; ok && val {
+			*roomlive = append(*roomlive, onlive.Lives...)
+		}
+	}
+	return roomlive, nil
+}
 
 //	配信中のルームの一覧を取得する
 func ApiLiveOnlives(
@@ -92,42 +130,3 @@ func ApiLiveOnlives(
 	return roomonlives, nil
 }
 
-//	指定したカテゴリー（"Free", "Official", "All"）のルーム一覧を作る。
-//	"All"のときでもGenre_idが0や700以上は含まないので重複はない。
-func ExtrRoomLiveByCtg(
-	roomonlives *RoomOnlives, //	配信中ルームのジャンル別一覧
-	tgt string, //	カテゴリ
-) (
-	roomlive *Lives, //	配信中ルーム情報
-	err error, //	エラー
-) {
-	roomlive = new(Lives)
-	for _, onlives := range roomonlives.Onlives {
-		switch {
-		case (tgt == "Free" || tgt == "All") && onlives.Genre_id == 200:
-			fallthrough
-		case (tgt == "Official" || tgt == "All") && (onlives.Genre_id >= 100 && onlives.Genre_id < 200):
-			//	log.Printf("%d %s\n", onlives.Genre_id, onlives.Genre_name)
-			*roomlive = append(*roomlive, onlives.Lives...)
-		default:
-		}
-	}
-	return	roomlive, nil
-}
-
-//	指定したジャンルのルーム一覧を作る。
-func ExtrRoomLiveByGnr(
-	roomonlives *RoomOnlives, //	配信中ルームのジャンル別一覧
-	gnr map[string]bool, //	抽出したいジャンル、mapにジャンルIDがありTrueであれば抽出する。
-) (
-	roomlive *Lives, //	配信中ルーム情報
-	err error, //	エラー
-) {
-	roomlive = new(Lives)
-	for _, onlive := range roomonlives.Onlives {
-		if ok, val := gnr[onlive.Genre_name]; ok && val {
-			*roomlive = append(*roomlive, onlive.Lives...)
-		}
-	}
-	return roomlive, nil
-}
