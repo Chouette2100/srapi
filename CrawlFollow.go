@@ -87,7 +87,7 @@ func CrwlFollow(
 		//	ここからはほしいデータがある場所を見つけて、そこのCSSセレクタを指定してデータを取得します。
 		//	CSSセレクタはGoogle ChromeのDeveloper Toolsで調べられます。
 		//	ただこの方法で得られるCSSセレクタは冗長になりがちなので、htmlながめながら自分で書いた方がいいかも(好みに合わせて)
-		//	自分が作ったセレクタで狙ったところを指定できているかもDevelopper Toolsで確認できます。
+		//	自分が作ったセレクタで狙ったところを指定できているかもDevelopper Toolsで確認できます(検索窓はctrl-Fで開きます）
 		//
 		//	ちなみに下記の
 		//		".listcardinfo .listcardinfo-main-text"
@@ -102,6 +102,17 @@ func CrwlFollow(
 		//	}
 		//
 		//	というような書き方になります。
+		//
+		//	他にもセレクターを
+		//			"#js-genre-section-all > ul > li:nth-child(" + fmt.Sprintf("%d", i) + ") > div > div > div.listcardinfo-info > h4"
+		//	としてfor文でくるくる回すなんて方法もあります。
+		//
+		//	たぶんいちばんいい（適切な）方法というのがあると思うのですが、あんまり考えたことないです。すみません。
+		//
+		//	詳しいことは
+		//		https://pkg.go.dev/github.com/PuerkitoBio/goquery
+		//		https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Selectors
+		//	を参考にしてください。
 
 		room.Main_name = s.Find(".listcardinfo-main-text").Text()
 		room.Room_url_key, _ = s.Find("a").Attr("href")
