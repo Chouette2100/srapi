@@ -5,6 +5,7 @@ https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0
 Ver. 0.0.1 s.Find()のセレクタの冗長部分を削除する。
+Ver. 0.0.2 s.Find()のセレクタの先頭に"#js-genre-section-all"を追加する。これがないと不要な要素が検出される。
 
 */
 package srapi
@@ -80,7 +81,7 @@ func CrwlFollow(
 	defer resp.Body.Close()
 
 	//	フォローするルームmaxnoroom分に対して処理を繰り返す
-	doc.Find(".listcardinfo").EachWithBreak(func(i int, s *goquery.Selection) bool {
+	doc.Find("#js-genre-section-all .listcardinfo").EachWithBreak(func(i int, s *goquery.Selection) bool {
 
 		var room RoomFollowing
 
