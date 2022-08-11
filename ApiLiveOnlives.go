@@ -7,6 +7,7 @@ https://opensource.org/licenses/mit-license.php
 Ver. 0.0.0
 Ver. 1.0.0 戻り値 status を err に変更する。
 Ver. 2.0.0 ExtrRoomLiveByCtg()とExtrRoomLiveByGnr()をRoomOnlivesのメソッドとする。
+Ver. 2.0.1 fmt.Errorf()の %v を %w に変更する。 
 
 */
 package srapi
@@ -111,19 +112,19 @@ func ApiLiveOnlives(
 	turl := "https://www.showroom-live.com/api/live/onlives"
 	u, err := url.Parse(turl)
 	if err != nil {
-		err = fmt.Errorf("url.Parse: %v", err)
+		err = fmt.Errorf("url.Parse: %w", err)
 		return nil, err
 	}
 	resp, err := client.Get(u.String())
 	if err != nil {
-		err = fmt.Errorf("client.Get: %v", err)
+		err = fmt.Errorf("client.Get: %w", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	roomonlives = new(RoomOnlives) //	ここで作られたRoomOnlives型の領域は参照可能な限り（関数外でも）存在します。
 	if err = json.NewDecoder(resp.Body).Decode(&roomonlives); err != nil {
-		err = fmt.Errorf("json.Decoder: %v", err)
+		err = fmt.Errorf("json.Decoder: %w", err)
 		return nil, err
 	}
 
