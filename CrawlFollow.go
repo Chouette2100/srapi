@@ -105,7 +105,7 @@ func CrwlFollow(
 		//
 		//	他にもセレクターを
 		//			"#js-genre-section-all > ul > li:nth-child(" + fmt.Sprintf("%d", i) + ") > div > div > div.listcardinfo-info > h4"
-		//	としてfor文でくるくる回すなんて方法もあります。
+		//	としてfor文でぐるぐる回すという方法もあります。
 		//
 		//	たぶんいちばんいい（適切な）方法というのがあると思うのですが、あんまり考えたことないです。すみません。
 		//
