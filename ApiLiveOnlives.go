@@ -8,7 +8,8 @@ Ver. 0.0.0
 Ver. 1.0.0 戻り値 status を err に変更する。
 Ver. 2.0.0 ExtrRoomLiveByCtg()とExtrRoomLiveByGnr()をRoomOnlivesのメソッドとする。
 Ver. 2.0.1 fmt.Errorf()の %v を %w に変更する。 
-Ver. 3.0.0 ExtrRoomLiveByCtg(), ExtrRoomLiveByGnr()をそれぞれExtrByCtg()、ExtrByCtg()に変更する。
+Ver. 3.0.0 ExtrRoomLiveByCtg(), ExtrRoomLiveyypByGnr()をそれぞれExtrByCtg()、ExtrByCtg()に変更する。
+Ver. 4.0.0 ExtrByCtg()、ExtrByCtg()の引数を Roomonlives から *RoomOnLives に変更する。
 
 */
 package srapi
@@ -66,7 +67,7 @@ type RoomOnlives struct {
 }
 //	指定したカテゴリー（"Free", "Official", "All"）のルーム一覧を作る。
 //	"All"のときでもGenre_idが0や700以上は含まないので重複はない。
-func (r RoomOnlives)ExtrByCtg(
+func (r *RoomOnlives)ExtrByCtg(
 	tgt string, //	カテゴリ
 ) (
 	roomlive *Lives, //	配信中ルーム情報
