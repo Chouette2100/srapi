@@ -10,6 +10,7 @@ Ver. 2.0.0 ExtrRoomLiveByCtg()とExtrRoomLiveByGnr()をRoomOnlivesのメソッ�
 Ver. 2.0.1 fmt.Errorf()の %v を %w に変更する。 
 Ver. 3.0.0 ExtrRoomLiveByCtg(), ExtrRoomLiveyypByGnr()をそれぞれExtrByCtg()、ExtrByCtg()に変更する。
 Ver. 4.0.0 ExtrByCtg()、ExtrByCtg()の引数を Roomonlives から *RoomOnLives に変更する。
+Ver. 4.1.0 上位でsort.Sort()をsort.Slice()に変更したため、sort.Sort()のためのメソッドを削除する。
 
 */
 package srapi
@@ -34,24 +35,6 @@ type Live struct {
 	Genre_id     int    //	0: 人気、 200: フリー、 100(?)〜199(?): 公式、 700〜: 特定属性
 }
 type Lives []Live
-
-//      sort.Sort()のための関数
-func (r Lives) Len() int {
-	return len(r)
-}
-
-func (r Lives) Swap(i, j int) {
-	r[i], r[j] = r[j], r[i]
-}
-
-func (r Lives) Choose(from, to int) (s Lives) {
-	s = r[from:to]
-	return
-}
-
-func (r Lives) Less(i, j int) bool {
-	return r[i].Started_at > r[j].Started_at
-}
 
 type RoomOnlives struct {
 	//	配信中ルーム一覧
