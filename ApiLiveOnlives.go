@@ -11,6 +11,7 @@ Ver. 2.0.1 fmt.Errorf()の %v を %w に変更する。
 Ver. 3.0.0 ExtrRoomLiveByCtg(), ExtrRoomLiveyypByGnr()をそれぞれExtrByCtg()、ExtrByCtg()に変更する。
 Ver. 4.0.0 ExtrByCtg()、ExtrByCtg()の引数を Roomonlives から *RoomOnLives に変更する。
 Ver. 4.1.0 上位でsort.Sort()をsort.Slice()に変更したため、sort.Sort()のためのメソッドを削除する。
+Ver. 4.1.0 ExtrByCtg()の引数を Roomonlives から *RoomOnLives に変更する（修正もれ）
 
 */
 package srapi
@@ -71,7 +72,7 @@ func (r *RoomOnlives)ExtrByCtg(
 }
 
 //	指定したジャンルのルーム一覧を作る。
-func (r RoomOnlives)ExtrByGnr(
+func (r *RoomOnlives)ExtrByGnr(
 	gnr map[string]bool, //	抽出したいジャンル、mapにジャンルIDがありTrueであれば抽出する。
 ) (
 	roomlive *Lives, //	配信中ルーム情報
