@@ -4,6 +4,7 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0
+Ver. 0.1.0 レベルイベントのRankとGapを−１とする。
 
 */
 package srapi
@@ -85,7 +86,7 @@ func GetPointByApi(
 		return res.Event.Ranking.Point, res.Event.Ranking.Rank, res.Event.Ranking.Gap, res.Event.Event_id, surl, res.Event.Event_name, nil
 	} else {
 		//	レベルイベントの場合はQuestから取得する
-		return res.Event.Quest.Support.Current_point, 0, 0, res.Event.Event_id, surl, res.Event.Event_name, nil
+		return res.Event.Quest.Support.Current_point, -1, -1, res.Event.Event_id, surl, res.Event.Event_name, nil
 
 	}
 }
