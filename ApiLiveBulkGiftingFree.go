@@ -33,7 +33,7 @@ type BulkGiftingFree struct {
 		Gift_id       int     //	(Official) 1, 2, 1001, 1002, 1003, (Free) 1501, 1502, 1503, 1504. 1505
 		Add_point     int     //	ボーナスを含んだ獲得ポイント
 		num           int     //	投げた星、種の個数
-		Remaining_num int     //	残りの星、種の個数（0になっているはず
+		Remaining_num int     //	残りの星、種の個数（呼び出し後は0になっているはず）
 		Gift_name     string  //	ギフト名 （Offiicial） "星A", "星B", "星C", "星D", "星E",（Free）"種A", "種B", "種C", "種D", "種E"
 		Bonus_rate    float64 //	ボーナス率（num >= 10であれば0.2）
 		Gift_type     int     //	2: ?
@@ -63,7 +63,7 @@ func ApiLiveBulkGiftingFree(
 
 	err = nil
 
-	turl := "https://www.showroom-live.com/api/live/gifting_free"
+	turl := "https://www.showroom-live.com/api/live/bulk_gifting_free"
 	u, e := url.Parse(turl)
 	if e != nil {
 		err = fmt.Errorf("url.Parse(): %w", e)
@@ -100,10 +100,10 @@ func ApiLiveBulkGiftingFree(
 		err = fmt.Errorf("client.Do(): %w", e)
 		return
 	}
-
 	// 関数を抜ける際に接続を切断し、リソースを解放するため必ずresponse.Bodyをcloseする
 	defer resp.Body.Close()
 
+	//	実行結果を取得する
 	if e = json.NewDecoder(resp.Body).Decode(&bulkgiftingfree); e != nil {
 		err = fmt.Errorf("json.NewDecoder(resp.Body).Decode(): %w", e)
 		return
