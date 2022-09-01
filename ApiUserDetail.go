@@ -21,8 +21,14 @@ import (
 
 //	リスナー情報
 type UserDetail struct {
-	User_id int    //	ユーザーID＝リスナーの識別子、ログインしていない場合は 0 となる。
-	Name    string //	ユーザー名＝リスナー名
+	User_id         int    //	ユーザーID＝リスナーの識別子、ログインしていない場合は 0 となる。
+	Name            string //	ユーザー名＝リスナー名
+	Age             int
+	Regidence       int
+	Description     string
+	Image           string
+	Birthday        string
+	Is_ng_nick_name bool //	？
 
 	//	エラー情報
 	//	ログインしている場合は空配列となる模様。
