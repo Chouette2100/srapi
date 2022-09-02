@@ -19,15 +19,19 @@ import (
 )
 
 type LivePolling struct {
-	Is_login          bool	//	ログインしているか？
+	Is_login          bool //	ログインしているか？
 	Show_login_dialog int
-	Online_user_num   int	//	視聴者数
+	Online_user_num   int //	視聴者数
 	Active_fan        struct {
-		Can_boostable interface{}
-		User          interface{}
-		Room          struct {
-			Total_user_count int	//	
-			Fan_name         string	//	ファンの名称
+		Can_boostable bool
+		User          struct {
+			Before_level  int
+			Titile_id     int
+			Current_level int
+		}
+		Room struct {
+			Total_user_count int    //
+			Fan_name         string //	ファンの名称
 		}
 	}
 	Live_watch_incentive struct {
@@ -57,7 +61,7 @@ func ApiLivePolling(
 	}
 
 	// クエリを組み立て
-	values := url.Values{}         // url.Valuesオブジェクト生成
+	values := url.Values{}                            // url.Valuesオブジェクト生成
 	values.Add("room_id", fmt.Sprintf("%d", room_id)) // key-valueを追加
 
 	// Request を生成
@@ -86,7 +90,6 @@ func ApiLivePolling(
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
 	bufstr := buf.String()
-
 
 	livepolling = new(LivePolling)
 	if err = json.NewDecoder(buf).Decode(livepolling); err != nil {
