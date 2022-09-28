@@ -1,3 +1,12 @@
+/*!
+Copyright © 2022 chouette.21.00@gmail.com
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
+
+
+Ver. 0.1.0
+
+*/
 package srapi
 
 import (
@@ -8,12 +17,6 @@ import (
 	"net/http"
 	"net/url"
 )
-
-/*
-
-	Ver.0.1.0
-
-*/
 
 type RoomStatus struct {
 	Started_at               int64 //	配信開始時刻（UnixTime）
