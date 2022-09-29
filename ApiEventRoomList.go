@@ -82,7 +82,7 @@ func GetRoominfFromEventByApi(
 		}
 		noroom := len(roomlistinf.RoomList)
 		log.Printf(" ip=%d next_page=%d len=%d\n", ip, next_page, noroom)
-		if noroom >= ie {
+		if noroom >= ie-ib+1 {
 			return roomlistinf, nil
 		}
 		ip = eventroomlist.Next_page
