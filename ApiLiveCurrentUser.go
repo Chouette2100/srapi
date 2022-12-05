@@ -49,11 +49,26 @@ func ApiLiveCurrentUser(
 		err = fmt.Errorf("url.Parsse: %w", err)
 		return livecurrentuser, err
 	}
-	resp, err := client.Get(u.String())
+
+	// Request を生成
+	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
-		err = fmt.Errorf("client.Get: %w", err)
-		return livecurrentuser, err
+		err = fmt.Errorf("http.NewRequest(): %w", err)
+		return
 	}
+
+	// User-Agentを設定
+	req.Header.Add("User-Agent", useragent)
+	req.Header.Add("Accept-Language", "ja-JP")
+
+	// Doメソッドでリクエストを投げる
+	// http.Response型のポインタ（とerror）が返ってくる
+	resp, err := client.Do(req)
+	if err != nil {
+		err = fmt.Errorf("client.Do(): %w", err)
+		return
+	}
+
 	defer resp.Body.Close()
 
 	if err = json.NewDecoder(resp.Body).Decode(&livecurrentuser); err != nil {

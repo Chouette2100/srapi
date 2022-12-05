@@ -80,6 +80,7 @@ func ApiLiveGiftingFree(
 
 	// User-Agentを設定
 	req.Header.Add("User-Agent", useragent)
+	req.Header.Add("Accept-Language", "ja-JP")
 
 	//	req.SetBasicAuth([USER], [PASS})
 

@@ -57,6 +57,7 @@ func ApiCsrftoken(
 
 	// User-Agentを設定
 	req.Header.Add("User-Agent", useragent)
+	req.Header.Add("Accept-Language", "ja-JP")
 
 	// Doメソッドでリクエストを投げる
 	// http.Response型のポインタ（とerror）が返ってくる
