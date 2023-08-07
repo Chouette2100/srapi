@@ -30,9 +30,9 @@ type Event struct {
 	}
 	Event_description     string
 	Is_event_Block        bool
-	Is_entry_scope_inner  bool	//	対象者限定か否か（？）
+	Is_entry_scope_inner  bool //	対象者限定か否か（？）
 	Start_soon            bool
-	League_ids            []int	//	val.= 9:XX, 10:S, 20:A, 30:B, 40:C （？）
+	League_ids            []int //	val.= 9:XX, 10:S, 20:A, 30:B, 40:C （？）
 	End_soon              bool
 	Type_name             string
 	Is_official           bool
@@ -47,8 +47,8 @@ type Event struct {
 	Start_comming         interface{}
 	Event_block_label     interface{}
 	Event_image_file_type string
-	Required_level_max    int	//	参加可能レベル上限
-	Required_level        int	//	参加可能レベル下限
+	Required_level_max    int //	参加可能レベル上限
+	Required_level        int //	参加可能レベル下限
 	Image_m               string
 	Offer_started_at      int64
 	No_amateur            bool
@@ -57,7 +57,7 @@ type Event struct {
 	Created_at            int64
 	Started_at            int64  //	イベント開始日時(UnixTime)
 	Event_url_key         string //	イベントURL(最後のフィールド)
-	Is_box_event          bool	//	親イベントか否か（？）
+	Is_box_event          bool   //	親イベントか否か（？）
 	Parent_event_id       int
 	Show_ranking          bool
 	Is_watch              bool
@@ -79,13 +79,27 @@ type EventSearch struct {
 	Event_list    []Event
 }
 
-//	複数ページにわかれたイベント情報を取得して一つのスライスにする。
-func MakeEventListByApi(client *http.Client) (esl []Event, err error) {
+/*
+複数ページにわかれたイベント情報を取得して一つのスライスにする。
+	MakeEventListByApi(client, client)
+	MakeEventListByApi(client, client, status)
+	 status: 1: 開催中(デフォルト)、 3: 開催予定、 4: 終了済み
+*/
+func MakeEventListByApi(client *http.Client, args... int) (esl []Event, err error) {
+
+	status := 1
+
+	if len(args) == 1 {
+		status = args[0]
+	} else if len(args) > 1 {
+		err = fmt.Errorf("usage: MakeEventListByApi(client, status) | MakeEventListByApi(client)")
+		return
+	}
 
 	esl = make([]Event, 0, 200)
 
 	for i := 1; ; i++ {
-		es, err := ApiEventSearch(client, i)
+		es, err := ApiEventSearch(client, i, status)
 		if err != nil {
 			err = fmt.Errorf("ApiEventSearch error(): %w", err)
 			return nil, err
@@ -100,14 +114,37 @@ func MakeEventListByApi(client *http.Client) (esl []Event, err error) {
 	return
 }
 
-//	配信中のルームの一覧を取得する
+/*
+配信中のルームの一覧を取得する
+	ApiEventSearch(client, page)
+	ApiEventSearch(client, page, status)
+	 status: 1: 開催中(デフォルト)、 3: 開催予定、 4: 終了済み
+*/
+
 func ApiEventSearch(
 	client *http.Client, //	HTTP client
-	page int,
+	args ...int,
 ) (
 	es *EventSearch, //	配信中ルームのジャンル別一覧
 	err error, //	エラー
 ) {
+
+	status := 1
+
+	if len(args) < 1 || len(args) > 2 {
+		err = fmt.Errorf("usage: ApiEventSearch(client, page) | ApiEventSearch(client, page, status)")
+		return
+	}
+	page := args[0]
+	if len(args) == 2 {
+		switch args[1] {
+		case 1, 3, 4:
+			status = args[1]
+		default:
+			err = fmt.Errorf("ApiEventSearch(): status must be 1,3,4")
+			return
+		}
+	}
 
 	turl := "https://www.showroom-live.com/api/event/search"
 	u, err := url.Parse(turl)
@@ -119,6 +156,7 @@ func ApiEventSearch(
 	// クエリを組み立て
 	values := url.Values{} // url.Valuesオブジェクト生成
 	values.Add("page", fmt.Sprintf("%d", page))
+	values.Add("status", fmt.Sprintf("%d", status))
 
 	//	log.Printf("values=%+v\n", values)
 
