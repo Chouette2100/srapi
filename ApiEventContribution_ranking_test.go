@@ -4,7 +4,8 @@ Copyright © 2022 chouette.21.00@gmail.com
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
-Ver. 0.1.0
+Ver. 1.1.1	Contribution_ranking.Me のtypeをanyからinterface{}に変更する。テスト用データを変更する。
+
 */
 package srapi
 
@@ -35,8 +36,8 @@ func TestApiContribution_ranking(t *testing.T) {
 			name: "test1",
 			args: args{
 				client:   nil,
-				ieventid: 35180,  //	特大くまのぬいぐるみをGETしちゃいまSHOWROOM！！ vol.130
-				roomid:   490305, //	柳瀬なぎ🍭🍩
+				ieventid: 35315,  //	
+				roomid:   417115, //	
 			},
 			wantErr: true,
 		},

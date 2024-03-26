@@ -4,7 +4,7 @@ Copyright © 2022 chouette.21.00@gmail.com
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
-Ver. 0.1.0
+Ver. 1.1.1	Contribution_ranking.Me のtypeをanyからinterface{}に変更する。
 */
 package srapi
 
@@ -26,8 +26,8 @@ type Contribution_ranking struct {
 		UserID    int    `json:"user_id"`
 		Rank      int    `json:"rank"`
 	} `json:"ranking"`
-	Me      any `json:"me"`
-	MyPoint int `json:"my_point"`
+	Me      interface{} `json:"me"`
+	MyPoint int         `json:"my_point"`
 	Event   struct {
 		EndedAt     int    `json:"ended_at"`
 		EventName   string `json:"event_name"`
@@ -39,7 +39,7 @@ type Contribution_ranking struct {
 	} `json:"event"`
 }
 
-//	リスナー別の貢献ポイントを取得する
+// リスナー別の貢献ポイントを取得する
 func ApiEventContribution_ranking(
 	client *http.Client, //	HTTPクライアント
 	ieventid int,
@@ -61,7 +61,7 @@ func ApiEventContribution_ranking(
 
 	// クエリを組み立て
 	values.Add("event_id", fmt.Sprintf("%d", ieventid)) // key-valueを追加
-	values.Add("room_id", fmt.Sprintf("%d", roomid)) // key-valueを追加
+	values.Add("room_id", fmt.Sprintf("%d", roomid))    // key-valueを追加
 
 	// Request を生成
 	req, err := http.NewRequest("GET", u.String(), nil)

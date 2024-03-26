@@ -5,6 +5,7 @@ https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0 srapi.goから分離する。
 Ver. 1.0.0 戻り値 status を err に変更する。
+Ver. 1.1.1	ダミーのユーザーエージェントを FireFox/124.0に変更する。
 
 */
 package srapi
@@ -18,7 +19,10 @@ import (
 )
 
 //	ダミーのUser-Agent
-var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
+/*
+	var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
+*/
+var useragent = "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
 
 //	csrf_token ... 接続の識別子
 type CsrfToken struct {
