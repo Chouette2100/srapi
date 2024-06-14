@@ -49,7 +49,7 @@ type RoomOnlives struct {
 	Bcsvr_post int
 	Bcsvr_host string
 }
-//	指定したカテゴリー（"Free", "Official", "All"）のルーム一覧を作る。
+//	指定したカテゴリー（"Liver", "exLiver", "All"）のルーム一覧を作る。
 //	"All"のときでもGenre_idが0や700以上は含まないので重複はない。
 func (r *RoomOnlives)ExtrByCtg(
 	tgt string, //	カテゴリ
@@ -60,9 +60,9 @@ func (r *RoomOnlives)ExtrByCtg(
 	roomlive = new(Lives)
 	for _, onlives := range r.Onlives {
 		switch {
-		case (tgt == "Free" || tgt == "All") && onlives.Genre_id == 200:
+		case (tgt == "Liver" || tgt == "All") && onlives.Genre_id == 200:
 			fallthrough
-		case (tgt == "Official" || tgt == "All") && (onlives.Genre_id >= 100 && onlives.Genre_id < 200):
+		case (tgt == "exLiver" || tgt == "All") && (onlives.Genre_id >= 100 && onlives.Genre_id < 200):
 			//	log.Printf("%d %s\n", onlives.Genre_id, onlives.Genre_name)
 			*roomlive = append(*roomlive, onlives.Lives...)
 		default:
