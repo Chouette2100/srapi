@@ -18,12 +18,6 @@ import (
 	"net/url"
 )
 
-//	ダミーのUser-Agent
-/*
-	var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
-*/
-var useragent = "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
-
 //	csrf_token ... 接続の識別子
 type CsrfToken struct {
 	Csrf_token string
