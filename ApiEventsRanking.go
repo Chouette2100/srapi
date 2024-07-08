@@ -51,12 +51,14 @@ type Eventranking struct {
 	} `json:"event"`
 }
 
-// フォローしているルームの一覧を指定した範囲で取得する。
+// イベントに参加しているルームの中で上位50ルームの獲得ポイントを取得する
+//	イベント最終結果発表後1日間は上位30ルームの最終結果を取得することができる。
+//	イベント最終結果発表後1日をすぎると得られる獲得ポイントには0がセットされている。
 func ApiEventsRanking(
 	client *http.Client, //	HTTPクライアント
-	ieventid int,
-	roomid int,
-	blockid int,
+	ieventid int,	//	（本来の）イベントID
+	roomid int,		//	イベントに参加しているルームどれかのルームID（Rankingには影響しないがTargetRoomRankingの結果には影響する）
+	blockid int,	//	ブロックイベントの場合はブロックID、ブロックイベントでない場合は0
 ) (
 	pranking *Eventranking,
 	err error,

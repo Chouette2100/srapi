@@ -32,6 +32,29 @@ func TestApiEventsRanking(t *testing.T) {
 		wantErr      bool
 	}{
 		// TODO: Add test cases.
+		/*
+		{
+			name: "test4",
+			args: args{
+				client:   nil,
+				ieventid: 36450,
+				roomid:   507716,
+				blockid:  0,
+			},
+			wantErr: true,
+		},
+		*/
+		{
+			name: "test3",
+			args: args{
+				client:   nil,
+				ieventid: 36142,
+				roomid:   192641,
+				blockid:  0,
+			},
+			wantErr: true,
+		},
+		/*
 		{
 			name: "test1",
 			args: args{
@@ -52,6 +75,7 @@ func TestApiEventsRanking(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		*/
 	}
 
 	client, cookiejar, err := exsrapi.CreateNewClient("")
