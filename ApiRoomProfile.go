@@ -180,7 +180,7 @@ func ApiRoomProfile(
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
-	bufstr := buf.String()
+	//	bufstr := buf.String()
 
 	//	JSONをデコードする。
 	//	次の記事を参考にさせていただいております。
@@ -193,7 +193,7 @@ func ApiRoomProfile(
 	if err = decoder.Decode(proominfall); err != nil {
 		log.Printf("decoder.Decode(proominfall) err: %v", err)
 		log.Printf(" room?id= %s", room_id)
-		log.Printf("bufstr: %s", bufstr)
+		//	log.Printf("bufstr: %s", bufstr)
 		err = fmt.Errorf("decoder.Decode(proominfall) err: %v", err)
 		return
 	}

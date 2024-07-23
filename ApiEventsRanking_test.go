@@ -10,6 +10,8 @@ package srapi
 
 import (
 	"log"
+	"io"
+	"os"
 
 	"net/http"
 	"reflect"
@@ -32,6 +34,46 @@ func TestApiEventsRanking(t *testing.T) {
 		wantErr      bool
 	}{
 		// TODO: Add test cases.
+		{
+			name: "test8",
+			args: args{
+				client:   nil,
+				ieventid: 35516,
+				roomid:   504554,
+				blockid:  0,
+			},
+			wantErr: true,
+		},
+		{
+			name: "test7",
+			args: args{
+				client:   nil,
+				ieventid: 36368,
+				roomid:   87911,
+				blockid:  0,
+			},
+			wantErr: true,
+		},
+		{
+			name: "test6",
+			args: args{
+				client:   nil,
+				ieventid: 35174,
+				roomid:   467869,
+				blockid:  0,
+			},
+			wantErr: true,
+		},
+		{
+			name: "test5",
+			args: args{
+				client:   nil,
+				ieventid: 36414,
+				roomid:   282817,
+				blockid:  0,
+			},
+			wantErr: true,
+		},
 		/*
 		{
 			name: "test4",
@@ -43,7 +85,6 @@ func TestApiEventsRanking(t *testing.T) {
 			},
 			wantErr: true,
 		},
-		*/
 		{
 			name: "test3",
 			args: args{
@@ -54,6 +95,17 @@ func TestApiEventsRanking(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		{
+			name: "test4",
+			args: args{
+				client:   nil,
+				ieventid: 36310,
+				roomid:   87911,
+				blockid:  0,
+			},
+			wantErr: true,
+		},
+		*/
 		/*
 		{
 			name: "test1",
@@ -78,6 +130,14 @@ func TestApiEventsRanking(t *testing.T) {
 		*/
 	}
 
+	logfile, err := exsrapi.CreateLogfile("ApiEventsRanking")
+	if err != nil {
+		panic("cannnot open logfile: " + err.Error())
+	}
+	defer logfile.Close()
+	//	log.SetOutput(logfile)
+	log.SetOutput(io.MultiWriter(logfile, os.Stdout))
+
 	client, cookiejar, err := exsrapi.CreateNewClient("")
 	if err != nil {
 		log.Printf("exsrapi.CeateNewClient(): %s", err.Error())
@@ -87,6 +147,7 @@ func TestApiEventsRanking(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			log.Printf("%+v\n", tt.args)
 			tt.args.client = client
 			gotPranking, err := ApiEventsRanking(tt.args.client, tt.args.ieventid, tt.args.roomid, tt.args.blockid)
 			for i, v := range gotPranking.Ranking {

@@ -33,6 +33,16 @@ func TestApiContribution_ranking(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
+			name: "test3",
+			args: args{
+				client:   nil,
+				ieventid: 36159,  //	
+				roomid:   518083, //	
+			},
+			wantErr: true,
+		},
+		/*
+		{
 			name: "test1",
 			args: args{
 				client:   nil,
@@ -50,6 +60,7 @@ func TestApiContribution_ranking(t *testing.T) {
 			},
 			wantErr: true,
 		},
+		*/
 	}
 
 	client, cookiejar, err := exsrapi.CreateNewClient("")

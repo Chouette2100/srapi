@@ -49,16 +49,22 @@ type Eventranking struct {
 		Image       string `json:"image"`
 		ShowRanking int    `json:"show_ranking"`
 	} `json:"event"`
+	Errors []struct {	//	Ex. {"errors":[{"error_user_msg":"エラーが発生しました","message":"Not Found","code":1002}]}
+		ErrorUserMsg string `json:"error_user_msg"`
+		Message      string `json:"message"`
+		Code         int    `json:"code"`
+	} `json:"errors"`
 }
 
 // イベントに参加しているルームの中で上位50ルームの獲得ポイントを取得する
+//
 //	イベント最終結果発表後1日間は上位30ルームの最終結果を取得することができる。
 //	イベント最終結果発表後1日をすぎると得られる獲得ポイントには0がセットされている。
 func ApiEventsRanking(
 	client *http.Client, //	HTTPクライアント
-	ieventid int,	//	（本来の）イベントID
-	roomid int,		//	イベントに参加しているルームどれかのルームID（Rankingには影響しないがTargetRoomRankingの結果には影響する）
-	blockid int,	//	ブロックイベントの場合はブロックID、ブロックイベントでない場合は0
+	ieventid int, //	（本来の）イベントID
+	roomid int, //	イベントに参加しているルームどれかのルームID（Rankingには影響しないがTargetRoomRankingの結果には影響する）
+	blockid int, //	ブロックイベントの場合はブロックID、ブロックイベントでない場合は0
 ) (
 	pranking *Eventranking,
 	err error,
