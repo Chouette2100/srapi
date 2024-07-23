@@ -4,7 +4,7 @@ import (
 	//	"time"
 	"bytes"
 	"fmt"
-	"log"
+	//	"log"
 
 	"encoding/json"
 	"net/http"
@@ -191,10 +191,10 @@ func ApiRoomProfile(
 
 	decoder := json.NewDecoder(buf)
 	if err = decoder.Decode(proominfall); err != nil {
-		log.Printf("decoder.Decode(proominfall) err: %v", err)
-		log.Printf(" room?id= %s", room_id)
+		//	log.Printf("decoder.Decode(proominfall) err: %v", err)
+		//	log.Printf(" room?id= %s", room_id)
 		//	log.Printf("bufstr: %s", bufstr)
-		err = fmt.Errorf("decoder.Decode(proominfall) err: %v", err)
+		err = fmt.Errorf("decoder.Decode(proominfall)(room_id=%s) err: %v", room_id, err)
 		return
 	}
 
