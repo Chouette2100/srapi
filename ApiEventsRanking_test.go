@@ -35,6 +35,17 @@ func TestApiEventsRanking(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
+			name: "test9",
+			args: args{
+				client:   nil,
+				ieventid: 36728,
+				roomid:   525386,
+				blockid:  20103,
+			},
+			wantErr: true,
+		},
+		/*
+		{
 			name: "test8",
 			args: args{
 				client:   nil,
@@ -74,7 +85,6 @@ func TestApiEventsRanking(t *testing.T) {
 			},
 			wantErr: true,
 		},
-		/*
 		{
 			name: "test4",
 			args: args{

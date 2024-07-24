@@ -85,7 +85,8 @@ func ApiEventsRanking(
 
 	if blockid > 0 {
 		//	ブロックイベントの場合
-		values.Add("event_block_id", fmt.Sprintf("%d", blockid)) // key-valueを追加
+		//	values.Add("event_block_id", fmt.Sprintf("%d", blockid)) // key-valueを追加
+		values.Add("event_block_division_id", fmt.Sprintf("%d", blockid)) // key-valueを追加
 	}
 
 	// Request を生成
