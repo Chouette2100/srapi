@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/chouette2100/exsrapi"
+	"github.com/Chouette2100/exsrapi"
 )
 
 func TestApiActivefanRoom(t *testing.T) {

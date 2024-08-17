@@ -17,7 +17,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/chouette2100/exsrapi"
+	"github.com/Chouette2100/exsrapi"
 )
 
 func TestApiEventsRanking(t *testing.T) {
@@ -39,8 +39,8 @@ func TestApiEventsRanking(t *testing.T) {
 			args: args{
 				client:   nil,
 				ieventid: 36728,
-				roomid:   525386,
-				blockid:  20103,
+				roomid:   525511,
+				blockid:  20102,
 			},
 			wantErr: true,
 		},

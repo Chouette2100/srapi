@@ -8,7 +8,7 @@ import (
 
 	"net/http"
 
-	"github.com/chouette2100/exsrapi"
+	"github.com/Chouette2100/exsrapi"
 )
 
 func TestApiRoomProfile(t *testing.T) {

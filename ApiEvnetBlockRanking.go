@@ -1,10 +1,10 @@
-/*!
+/*
+!
 Copyright © 2022 chouette.21.00@gmail.com
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
 Ver. 0.1.0
-
 */
 package srapi
 
@@ -22,11 +22,13 @@ import (
 )
 
 type Block_ranking struct {
-	Is_official      bool
+	//	boolとintのinterface{}型はデータ取得時にbool型として値を設定しておくこと
+	//	該当する変数を使うときは一律に if br.Is_official.(bool) { ... } のようにすればよい
+	Is_official      interface{} //	block_id != 0のとき false/true, bock_id == 0 のとき 0/1
 	Room_url_key     string
 	Room_description string
 	Image_s          string
-	Is_online        bool
+	Is_online        interface{} //	block_id != 0のとき false/true, bock_id == 0 のとき 0/1
 	Is_fav           bool
 	Genre_id         int
 	Point            int
@@ -42,7 +44,7 @@ type EventBlockRanking struct {
 	Block_ranking_list []Block_ranking
 }
 
-//	ブロックランキングイベント参加中のルーム情報の一覧を取得する。
+// ブロックランキングイベント参加中のルーム情報の一覧を取得する。
 func GetEventBlockRanking(
 	client *http.Client,
 	eventid int,
@@ -60,13 +62,24 @@ func GetEventBlockRanking(
 	noroom := 0
 
 	for page := 1; page > 0; {
+		tebr := new(EventBlockRanking)
+		//	tebr.Block_ranking_list = make([]Block_ranking, 0)
 
 		//	イベント参加ルーム一覧のデータ（htmmの一部をぬきだした形になっている）を取得する。
 		//	データを分割して取得するタイプのAPIを使うときはこのような処理を入れておいた方が安全です。
-		ebr, err = ApiBlockEventRnaking(client, eventid, blockid, page)
+		tebr, err = ApiBlockEventRnaking(client, eventid, blockid, page)
 		if err != nil {
 			err = fmt.Errorf("ApiEventRoomList(): %w", err)
 			return nil, err
+		}
+
+		if page == 1 {
+			ebr = tebr
+		} else {
+			ebr.Block_ranking_list = append(
+				ebr.Block_ranking_list,
+				tebr.Block_ranking_list...,
+			)
 		}
 
 		noroom = len(ebr.Block_ranking_list)
@@ -88,7 +101,6 @@ func GetEventBlockRanking(
 		ebr.Block_ranking_list = nil
 		return
 	}
-
 
 	return
 }
@@ -144,5 +156,26 @@ func ApiBlockEventRnaking(
 		err = fmt.Errorf("json.NewDecoder(resp.Body).Decode(&ebr): %w", err)
 		return
 	}
+
+	//	現状では下記でもOK
+	//	if block_id == 0 {
+	//		for i, br := range ebr.Block_ranking_list {
+	//			ebr.Block_ranking_list[i].Is_official = br.Is_online != 0
+	//			ebr.Block_ranking_list[i].Is_online = br.Is_online != 0
+	//		}
+	//	}
+	//	今後のSHOWROOMの仕様変更の可能性を考え以下のようにしておく
+	//	最悪(?)のケースを考えるとこれでも不十分。
+	for i, br := range ebr.Block_ranking_list {
+		if vi, ok := br.Is_online.(float64); ok {
+			ebr.Block_ranking_list[i].Is_online = vi != 0
+		} else {
+			break
+		}
+		if vi, ok := br.Is_official.(float64); ok {
+			ebr.Block_ranking_list[i].Is_official = vi != 0
+		}
+	}
+
 	return
 }
