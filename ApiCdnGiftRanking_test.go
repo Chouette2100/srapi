@@ -58,6 +58,7 @@ func TestApiiCdnUserGiftRanking(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotPranking, err := ApiCdnGiftRanking(tt.args.client, tt.args.genre_id, tt.args.limit)
 			if (err != nil) != tt.wantErr {
+				log.Printf("%+v\n", gotPranking.Errors)
 				t.Errorf("ApiCdnGiftRanking() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
@@ -65,6 +66,7 @@ func TestApiiCdnUserGiftRanking(t *testing.T) {
 				for _, v := range gotPranking.RankingList {
 					log.Printf("%3d%10d %10d %s\n", v.Rank, v.Score, v.Room.ID, v.Room.Name)
 				}
+				log.Printf("%+v\n", gotPranking.Errors)
 				//	t.Errorf("ApiiCdnUserGiftRanking() = %v, want %v", gotPranking, tt.wantPranking)
 			}
 		})
@@ -116,6 +118,7 @@ func TestApiCdnUserGiftRanking(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotPranking, err := ApiCdnUserGiftRanking(tt.args.client, tt.args.genre_id, tt.args.limit)
 			if (err != nil) != tt.wantErr {
+				log.Printf("%+v\n", gotPranking.Errors)
 				t.Errorf("ApiCdnUserGiftRanking() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
@@ -123,6 +126,7 @@ func TestApiCdnUserGiftRanking(t *testing.T) {
 				for _, v := range gotPranking.RankingList {
 					log.Printf("%3d%10d %10d %s\n", v.Rank, v.Score, v.User.ID, v.User.Name)
 				}
+				log.Printf("%+v\n", gotPranking.Errors)
 				//	t.Errorf("ApiCdnUserGiftRanking() = %v, want %v", gotPranking, tt.wantPranking)
 			}
 		})

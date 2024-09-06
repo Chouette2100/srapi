@@ -31,11 +31,16 @@ type CdnGiftRanking struct {
 			NextLiveSchedule int    `json:"next_live_schedule"`
 		} `json:"room"`
 	} `json:"ranking_list"`
+	Errors []struct { //	例えば gift_id が（整数でなく）アルファベットの場合
+		ErrorUserMsg string `json:"error_user_msg"`
+		Message      string `json:"message"`
+		Code         int    `json:"code"`
+	} `json:"errors"`
 }
 
 // ギフトランキングを取得する
-//
-//	https://public-api.showroom-cdn.com/gift_ranking/mmm?limit=nnn		mmm: ジャンルID　nnn;　最大取得件数	
+//	(イベントギフトランキングとは別のものです)
+//	https://public-api.showroom-cdn.com/gift_ranking/mmm?limit=nnn		mmm: ジャンルID　nnn;　最大取得件数
 //
 //	|コード|名称|補足|
 //	|---|---|---|
@@ -55,7 +60,7 @@ type CdnGiftRanking struct {
 func ApiCdnGiftRanking(
 	client *http.Client, //	HTTPクライアント
 	genre_id int, //	ジャンルID
-	limit	int,	//	最大取得件数
+	limit int, //	最大取得件数
 ) (
 	pranking *CdnGiftRanking,
 	err error,
@@ -114,7 +119,6 @@ func ApiCdnGiftRanking(
 	return
 }
 
-
 type CdnUserGiftRanking struct {
 	RankingList []struct {
 		UserID  int `json:"user_id"`
@@ -127,19 +131,26 @@ type CdnUserGiftRanking struct {
 			AvatarURL string `json:"avatar_url"`
 		} `json:"user"`
 	} `json:"ranking_list"`
+	Errors []struct { //	例えば gift_id が（整数でなく）アルファベットの場合
+		ErrorUserMsg string `json:"error_user_msg"`
+		Message      string `json:"message"`
+		Code         int    `json:"code"`
+	} `json:"errors"`
 }
 
 // ユーザーギフトランキングを取得する
-//	https://public-api.showroom-cdn.com/user_gift_ranking/mmm?limit=nnn	
+//
+//	https://public-api.showroom-cdn.com/user_gift_ranking/mmm?limit=nnn
 func ApiCdnUserGiftRanking(
 	client *http.Client, //	HTTPクライアント
-	genre_id int, //	ジャンルID: 206
-	limit	int,	//	最大取得件数
+	genre_id int, //	206
+	limit int, //	最大取得件数
 ) (
 	pranking *CdnUserGiftRanking,
 	err error,
 ) {
 	turl := fmt.Sprintf("https://public-api.showroom-cdn.com/user_gift_ranking/%d", genre_id)
+	//	turl := "https://public-api.showroom-cdn.com/user_gift_ranking/AAA"	//	エラーのテスト用
 	u, err := url.Parse(turl)
 	if err != nil {
 		err = fmt.Errorf("url.Parse(): %w", err)
