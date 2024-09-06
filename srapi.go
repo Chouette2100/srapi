@@ -13,9 +13,10 @@ package srapi
 		ApiEventRoomList_test.goとApiEventBlockRanking.goを作成する。
 		importのgithub.com/chouette2100をChouette2100に変更する。
 00AC00	ApiEventGiftRanking()をあらたに作成する
+00AD00	ApiCdnGiftRanking(), ApiCdnUserGiftRanking()をあらたに作成する
 
 */
-const Version = "00AC00"
+const Version = "00AD00"
 
 //	ダミーのUser-Agent
 //	var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"

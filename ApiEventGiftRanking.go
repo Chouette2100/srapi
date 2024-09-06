@@ -46,6 +46,7 @@ type EventGiftRanking struct {
 }
 
 // イベントギフトランキングを取得する
+//
 //	https://www.showroom.com/api/event_gift_ranking/nnnnnnn		nnnnnn: gift_id
 //	取得に期限はないようで EventRankingID=1 にたいしてもそれらしい結果が得られている。
 func ApiEventGiftRanking(
