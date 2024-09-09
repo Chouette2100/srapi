@@ -56,6 +56,7 @@ func TestApiiCdnUserGiftRanking(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			log.Printf("%+v\n", tt.args)
 			gotPranking, err := ApiCdnGiftRanking(tt.args.client, tt.args.genre_id, tt.args.limit)
 			if (err != nil) != tt.wantErr {
 				log.Printf("%+v\n", gotPranking.Errors)

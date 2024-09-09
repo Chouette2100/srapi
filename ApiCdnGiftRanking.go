@@ -13,31 +13,32 @@ import (
 )
 
 type CdnGiftRanking struct {
-	TotalScore  int `json:"total_score"`
-	RankingList []struct {
-		RoomID  int `json:"room_id"`
-		Rank    int `json:"rank"`
-		Score   int `json:"score"`
-		OrderNo int `json:"order_no"`
-		Room    struct {
-			ID               int    `json:"id"`
-			Name             string `json:"name"`
-			URLKey           string `json:"url_key"`
-			ImageURL         string `json:"image_url"`
-			Description      string `json:"description"`
-			FollowerNum      int    `json:"follower_num"`
-			IsLive           bool   `json:"is_live"`
-			IsParty          bool   `json:"is_party"`
-			NextLiveSchedule int    `json:"next_live_schedule"`
-		} `json:"room"`
-	} `json:"ranking_list"`
-	Errors []struct { //	例えば gift_id が（整数でなく）アルファベットの場合
+	TotalScore  int           `json:"total_score"`
+	RankingList []GrRanking	`json:"ranking_list"`
+		Errors []struct { //	例えば gift_id が（整数でなく）アルファベットの場合
 		ErrorUserMsg string `json:"error_user_msg"`
 		Message      string `json:"message"`
 		Code         int    `json:"code"`
 	} `json:"errors"`
 }
-
+type GrRoom struct {
+	ID               int    `json:"id"`
+	Name             string `json:"name"`
+	URLKey           string `json:"url_key"`
+	ImageURL         string `json:"image_url"`
+	Description      string `json:"description"`
+	FollowerNum      int    `json:"follower_num"`
+	IsLive           bool   `json:"is_live"`
+	IsParty          bool   `json:"is_party"`
+	NextLiveSchedule int    `json:"next_live_schedule"`
+}
+type GrRanking struct {
+	RoomID  int  `json:"room_id"`
+	Rank    int  `json:"rank"`
+	Score   int  `json:"score"`
+	OrderNo int  `json:"order_no"`
+	Room    GrRoom `json:"room"`
+}
 // ギフトランキングを取得する
 //	(イベントギフトランキングとは別のものです)
 //	https://public-api.showroom-cdn.com/gift_ranking/mmm?limit=nnn		mmm: ジャンルID　nnn;　最大取得件数
@@ -119,24 +120,28 @@ func ApiCdnGiftRanking(
 	return
 }
 
+
 type CdnUserGiftRanking struct {
-	RankingList []struct {
-		UserID  int `json:"user_id"`
-		Rank    int `json:"rank"`
-		Score   int `json:"score"`
-		OrderNo int `json:"order_no"`
-		User    struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			AvatarURL string `json:"avatar_url"`
-		} `json:"user"`
-	} `json:"ranking_list"`
-	Errors []struct { //	例えば gift_id が（整数でなく）アルファベットの場合
+	RankingList []UgrRanking `json:"ranking_list"`
+	Errors []struct {
 		ErrorUserMsg string `json:"error_user_msg"`
 		Message      string `json:"message"`
 		Code         int    `json:"code"`
 	} `json:"errors"`
 }
+type UgrUser struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	AvatarURL string `json:"avatar_url"`
+}
+type UgrRanking struct {
+	UserID  int  `json:"user_id"`
+	Rank    int  `json:"rank"`
+	Score   int  `json:"score"`
+	OrderNo int  `json:"order_no"`
+	User    UgrUser `json:"user"`
+}
+
 
 // ユーザーギフトランキングを取得する
 //
