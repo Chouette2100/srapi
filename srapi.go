@@ -16,9 +16,10 @@ package srapi
 00AD00	ApiCdnGiftRanking(), ApiCdnUserGiftRanking()をあらたに作成する
 00AD01	ApiCdnGiftRanking(), ApiCdnUserGiftRanking()で構造体にErrorsを追加する
 00AD02	ApiCdnGiftRanking(), ApiCdnUserGiftRanking()の構造体を展開する。
+00AE00	ApiCdnGiftRankingContribution()をあらたに作成する
 
 */
-const Version = "00AD02"
+const Version = "00AE00"
 
 //	ダミーのUser-Agent
 //	var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
