@@ -14,7 +14,7 @@ import (
 
 type GiftRankingContribution struct {
 	Room        GrcRoom          `json:"room"`
-	RankingList []GrcRankingList `json:"ranking_list"`
+	RankingList []GrcRanking     `json:"ranking_list"`
 }
 type GrcRoom struct {
 	ID               int    `json:"id"`
@@ -32,7 +32,7 @@ type GrcUser struct {
 	Name      string `json:"name"`
 	AvatarURL string `json:"avatar_url"`
 }
-type GrcRankingList struct {
+type GrcRanking struct {
 	UserID  int     `json:"user_id"`
 	Rank    int     `json:"rank"`
 	Score   int     `json:"score"`

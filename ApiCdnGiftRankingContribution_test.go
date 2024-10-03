@@ -46,7 +46,7 @@ func TestApiCdnGiftRankingContribution(t *testing.T) {
 			name: "492 kogachan",
 			args: args{
 				client:   client,
-				genre_id: 493,
+				genre_id: 492,
 				url_key:  "kogachan",
 			},
 			wantPranking: nil,
