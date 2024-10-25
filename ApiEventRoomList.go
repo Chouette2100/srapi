@@ -11,7 +11,7 @@ package srapi
 import (
 	"errors"
 	"fmt"
-	"log"
+	//	"log"
 	"strconv"
 	"strings"
 
@@ -53,7 +53,7 @@ func GetRoominfFromEventByApi(
 
 	roomlistinf = new(RoomListInf)
 
-	next_page := 0
+	//	next_page := 0
 
 	roomlistinf.RoomList = make([]Room, 0)
 
@@ -81,7 +81,7 @@ func GetRoominfFromEventByApi(
 			return nil, err
 		}
 		noroom := len(roomlistinf.RoomList)
-		log.Printf(" ip=%d next_page=%d len=%d\n", ip, next_page, noroom)
+		//	log.Printf(" ip=%d next_page=%d len=%d\n", ip, next_page, noroom)
 		if noroom >= ie-ib+1 {
 			return roomlistinf, nil
 		}
@@ -169,7 +169,7 @@ func CrawlEventRoomList(valuehtml string,
 
 	})
 
-	log.Printf(" CrawlEventInfAndRoomList() len(*roominfolist)=%d\n", len(*roomlist))
+	//	log.Printf(" CrawlEventInfAndRoomList() len(*roominfolist)=%d\n", len(*roomlist))
 
 	return
 

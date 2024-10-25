@@ -52,6 +52,19 @@ func TestGetEventBlockRanking(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
+			name: "wdebutf_s1?block_id=25501",
+			args: args{
+				client:  client,
+				eventid: 37430,
+				blockid: 25501,
+				ib:      1,
+				ie:      100,
+			},
+			wantEbr: nil,
+			wantErr: false,
+		},
+		/*
+		{
 			name: "TestGetEventBlockRanking",
 			args: args{
 				client:  client,
@@ -63,7 +76,6 @@ func TestGetEventBlockRanking(t *testing.T) {
 			wantEbr: nil,
 			wantErr: false,
 		},
-		/*
 		{
 			name: "TestGetEventBlockRanking",
 			args: args{
@@ -94,7 +106,7 @@ func TestGetEventBlockRanking(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotEbr, err := GetEventBlockRanking(tt.args.client, tt.args.eventid, tt.args.blockid, tt.args.ib, tt.args.ie)
 			//	log.Printf("GetEventBlockRanking(): %+v\n%+v", err, gotEbr)
-			log.Printf("eventid= %d, block_id= %d\n", tt.args.eventid, tt.args.eventid)
+			log.Printf("eventid= %d, block_id= %d\n", tt.args.eventid, tt.args.blockid)
 			for _, br := range(gotEbr.Block_ranking_list) {
 			log.Printf("%10s%4d%10d\n", br.Room_id, br.Rank, br.Point)
 			}

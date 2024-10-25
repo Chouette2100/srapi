@@ -38,13 +38,23 @@ func TestApiEventsRanking(t *testing.T) {
 			name: "test9",
 			args: args{
 				client:   nil,
+				ieventid: 37430,
+				roomid:   529999,
+				blockid:  25501,
+			},
+			wantErr: true,
+		},
+		/*
+		{
+			name: "test9",
+			args: args{
+				client:   nil,
 				ieventid: 36728,
 				roomid:   525511,
 				blockid:  20102,
 			},
 			wantErr: true,
 		},
-		/*
 		{
 			name: "test8",
 			args: args{

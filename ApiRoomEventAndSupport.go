@@ -23,6 +23,7 @@ import (
 )
 
 //	イベントの順位と獲得ポイント
+/*
 //	JSONには他にもいろんなフィールドがあります。
 //	ぜったい必要そうなものとフィールドの作りが面倒そうなところだけ構造体にしてあります。
 type RoomEvnetAndSupport struct {
@@ -58,6 +59,96 @@ type RoomEvnetAndSupport struct {
 		}
 	}
 }
+*/
+type RoomEvnetAndSupport struct {
+	Support      any   `json:"support"`
+	ResEvent        ResEvent `json:"event"`
+	RegularEvent any   `json:"regular_event"`
+}
+type EndAnimation struct {
+	TriggerTime int `json:"trigger_time"`
+	Value       int `json:"value"`
+	Type        int `json:"type"`
+}
+type ContributionRanking struct {
+	UserID    int    `json:"user_id"`
+	Name      string `json:"name"`
+	Point     int    `json:"point"`
+	Rank      int    `json:"rank"`
+	AvatarID  int    `json:"avatar_id"`
+	AvatarURL string `json:"avatar_url"`
+}
+type SupportUsers struct {
+	UserID    int    `json:"user_id"`
+	Point     int    `json:"point"`
+	Order     int    `json:"order"`
+	Name      string `json:"name"`
+	AvatarID  int    `json:"avatar_id"`
+	AvatarURL string `json:"avatar_url"`
+}
+type Support struct {
+	SupportID      int            `json:"support_id"`
+	GoalPoint      int            `json:"goal_point"`
+	IsAchieved     bool           `json:"is_achieved"`
+	CurrentPoint   int            `json:"current_point"`
+	NextLevel      int            `json:"next_level"`
+	Title          string         `json:"title"`
+	TutorialURL    string         `json:"tutorial_url"`
+	SupportUsers   []SupportUsers `json:"support_users"`
+	SupportMyPoint int            `json:"support_my_point"`
+}
+type QuestList struct {
+	SupportID     int    `json:"support_id"`
+	QuestLevel    int    `json:"quest_level"`
+	Title         string `json:"title"`
+	GoalPoint     int    `json:"goal_point"`
+	NumberOfItems int    `json:"number_of_items"`
+	RestItems     int    `json:"rest_items"`
+	Color         string `json:"color"`
+	IsAcquired    bool   `json:"is_acquired"`
+}
+type Quest struct {
+	QuestLevel          int         `json:"quest_level"`
+	Support             Support     `json:"support"`
+	QuestList           []QuestList `json:"quest_list"`
+	Text                string      `json:"text"`
+	ContributorListURL  string      `json:"contributor_list_url"`
+	IsAllQuestCompleted int         `json:"is_all_quest_completed"`
+}
+type ResRanking struct {
+	BeforeRank           int    `json:"before_rank"`
+	MaxRank              int    `json:"max_rank"`
+	Point                int    `json:"point"`
+	Gap                  int    `json:"gap"`
+	Text                 string `json:"text"`
+	SequenceNum          int    `json:"sequence_num"`
+	IsAnimation          int    `json:"is_animation"`
+	NextRank             int    `json:"next_rank"`
+	Rank                 int    `json:"rank"`
+	LargeRank            int    `json:"large_rank"`
+	LowerRank            int    `json:"lower_rank"`
+	LowerGap             int    `json:"lower_gap"`
+	EventBlockDivisionID int    `json:"event_block_division_id"`
+}
+type ResEvent struct {
+	EventID                 int                   `json:"event_id"`
+	EventName               string                `json:"event_name"`
+	Image                   string                `json:"image"`
+	EventURL                string                `json:"event_url"`
+	EndAnimation            []EndAnimation        `json:"end_animation"`
+	EventType               string                `json:"event_type"`
+	StartedAt               int                   `json:"started_at"`
+	EndedAt                 int                   `json:"ended_at"`
+	RemainTime              int                   `json:"remain_time"`
+	EventDescription        string                `json:"event_description"`
+	AdditionalEventPoints   []any                 `json:"additional_event_points"`
+	AdditionalEventPointSum int                   `json:"additional_event_point_sum"`
+	TutorialURL             string                `json:"tutorial_url"`
+	ContributionRanking     []ContributionRanking `json:"contribution_ranking"`
+	Quest                   Quest                 `json:"quest"`
+	ShowRanking             int                   `json:"show_ranking"`
+	ResRanking                 ResRanking               `json:"ranking"`
+}
 
 //	イベントでの獲得ポイントを取得する
 func GetPointByApi(
@@ -70,6 +161,7 @@ func GetPointByApi(
 	eventid int, //	イベント識別子
 	eventurl string, //	イベントのURLの末尾のフィールド
 	eventname string, //	イベント名
+	blockid   int,   //		ブロックイベントのブロックID
 	err error, //	エラー情報
 ) {
 	
@@ -79,14 +171,17 @@ func GetPointByApi(
 		return
 	}
 
-	url := strings.Split(res.Event.Event_url, "/")
+	url := strings.Split(res.ResEvent.EventURL, "/")
 	surl := url[len(url)-1]
-	if res.Event.Ranking.Rank != 0 {
+	if res.ResEvent.ResRanking.Rank != 0 {
 		//	ランキングイベントの場合はRankingから取得する
-		return res.Event.Ranking.Point, res.Event.Ranking.Rank, res.Event.Ranking.Gap, res.Event.Event_id, surl, res.Event.Event_name, nil
+		return res.ResEvent.ResRanking.Point, res.ResEvent.ResRanking.Rank,
+			res.ResEvent.ResRanking.Gap, res.ResEvent.EventID, surl,
+			res.ResEvent.EventName, res.ResEvent.ResRanking.EventBlockDivisionID, nil
 	} else {
 		//	レベルイベントの場合はQuestから取得する
-		return res.Event.Quest.Support.Current_point, -1, -1, res.Event.Event_id, surl, res.Event.Event_name, nil
+		return res.ResEvent.Quest.Support.CurrentPoint, -1, -1, res.ResEvent.EventID,
+			surl, res.ResEvent.EventName, res.ResEvent.ResRanking.EventBlockDivisionID, nil
 
 	}
 }

@@ -19,9 +19,11 @@ package srapi
 00AE00	ApiCdnGiftRankingContribution()をあらたに作成する
 00AE01	ApiCdnGiftRankingContribution()でtype名GrcRankingListをGrcRankingに変更する
 00AF00	ApiCdnSeasonAwardRanking()をあらたに作成する
+01AA00  ApiRoomEventAndSupport()の構造体を変更し、GetPointByAPI()の引数にBlockIDを追加する
+
 
 */
-const Version = "00AF00"
+const Version = "01AA00"
 
 //	ダミーのUser-Agent
 //	var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
