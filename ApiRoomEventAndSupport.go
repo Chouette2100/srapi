@@ -1,11 +1,11 @@
-/*!
+/*
+!
 Copyright © 2022 chouette.21.00@gmail.com
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
 Ver. 0.0.0
 Ver. 0.1.0 レベルイベントのRankとGapを−１とする。
-
 */
 package srapi
 
@@ -19,7 +19,6 @@ import (
 	"net/url"
 
 	"encoding/json"
-
 )
 
 //	イベントの順位と獲得ポイント
@@ -61,9 +60,9 @@ type RoomEvnetAndSupport struct {
 }
 */
 type RoomEvnetAndSupport struct {
-	Support      any   `json:"support"`
-	ResEvent        ResEvent `json:"event"`
-	RegularEvent any   `json:"regular_event"`
+	Support      any      `json:"support"`
+	ResEvent     ResEvent `json:"event"`
+	RegularEvent any      `json:"regular_event"`
 }
 type EndAnimation struct {
 	TriggerTime int `json:"trigger_time"`
@@ -147,10 +146,10 @@ type ResEvent struct {
 	ContributionRanking     []ContributionRanking `json:"contribution_ranking"`
 	Quest                   Quest                 `json:"quest"`
 	ShowRanking             int                   `json:"show_ranking"`
-	ResRanking                 ResRanking               `json:"ranking"`
+	ResRanking              ResRanking            `json:"ranking"`
 }
 
-//	イベントでの獲得ポイントを取得する
+// イベントでの獲得ポイントを取得する
 func GetPointByApi(
 	client *http.Client, //	HTTPクライアント
 	roomid int, //	配信ルームの識別子（プロフィールやファンルームのURLの最後にある6桁程度の数）
@@ -161,10 +160,10 @@ func GetPointByApi(
 	eventid int, //	イベント識別子
 	eventurl string, //	イベントのURLの末尾のフィールド
 	eventname string, //	イベント名
-	blockid   int,   //		ブロックイベントのブロックID
+	blockid int, //		ブロックイベントのブロックID
 	err error, //	エラー情報
 ) {
-	
+
 	res, e := ApiRoomEventAndSupport(client, fmt.Sprintf("%d", roomid))
 	if e != nil {
 		err = fmt.Errorf("ApiRoomEventAndSupport(): %w", e)
@@ -180,13 +179,13 @@ func GetPointByApi(
 			res.ResEvent.EventName, res.ResEvent.ResRanking.EventBlockDivisionID, nil
 	} else {
 		//	レベルイベントの場合はQuestから取得する
-		return res.ResEvent.Quest.Support.CurrentPoint, -1, -1, res.ResEvent.EventID,
+		return res.ResEvent.Quest.Support.CurrentPoint, res.ResEvent.Quest.QuestLevel - 10000, -1, res.ResEvent.EventID,
 			surl, res.ResEvent.EventName, res.ResEvent.ResRanking.EventBlockDivisionID, nil
 
 	}
 }
 
-//	イベントの順位と獲得ポイントを知るAPI（/api/room/event_and_suport）を実行する。
+// イベントの順位と獲得ポイントを知るAPI（/api/room/event_and_suport）を実行する。
 func ApiRoomEventAndSupport(
 	client *http.Client, //	HTTPクライアント
 	roomid string, //	配信ルームの識別子（プロフィールやファンルームのURLの最後にある6桁程度の数）
@@ -239,7 +238,6 @@ func ApiRoomEventAndSupport(
 	buf.ReadFrom(resp.Body)
 	//	bufstr := buf.String()
 	//	log.Printf("bufstr=%s\n", bufstr)
-
 
 	if err = json.NewDecoder(buf).Decode(res); err != nil {
 		err = fmt.Errorf("json.NewDecoder: %w", err)
