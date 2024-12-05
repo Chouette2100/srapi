@@ -60,9 +60,9 @@ type RoomEvnetAndSupport struct {
 }
 */
 type RoomEvnetAndSupport struct {
-	Support      any      `json:"support"`
-	ResEvent     ResEvent `json:"event"`
-	RegularEvent any      `json:"regular_event"`
+	Support      interface{} `json:"support"`
+	ResEvent     ResEvent    `json:"event"`
+	RegularEvent interface{} `json:"regular_event"`
 }
 type EndAnimation struct {
 	TriggerTime int `json:"trigger_time"`
@@ -140,7 +140,7 @@ type ResEvent struct {
 	EndedAt                 int                   `json:"ended_at"`
 	RemainTime              int                   `json:"remain_time"`
 	EventDescription        string                `json:"event_description"`
-	AdditionalEventPoints   []any                 `json:"additional_event_points"`
+	AdditionalEventPoints   []interface{}         `json:"additional_event_points"`
 	AdditionalEventPointSum int                   `json:"additional_event_point_sum"`
 	TutorialURL             string                `json:"tutorial_url"`
 	ContributionRanking     []ContributionRanking `json:"contribution_ranking"`
