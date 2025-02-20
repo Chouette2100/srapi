@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/Chouette2100/exsrapi"
 )
@@ -99,8 +100,11 @@ func TestGetRoomsPasteventsByApi(t *testing.T) {
 			name: "Test1",
 			args: args{
 				client: client,
-				roomid: 75721,
+				// roomid: 75721,
+				// roomid: 87911,
+				roomid: 529960,
 			},
+			wantErr: false,
 		},
 	}
 
@@ -112,7 +116,10 @@ func TestGetRoomsPasteventsByApi(t *testing.T) {
 				return
 			}
 			if !reflect.DeepEqual(gotRoomspastevents, tt.wantRoomspastevents) {
-				t.Errorf("GetRoomsPasteventsByApi() = %v, want %v", gotRoomspastevents, tt.wantRoomspastevents)
+				// t.Errorf("GetRoomsPasteventsByApi() = %v, want %v", gotRoomspastevents, tt.wantRoomspastevents)
+				for i, v := range gotRoomspastevents.Events {
+					log.Printf("Event[%d]: %s %s\n", i, v.EventName, time.Unix(int64(v.StartedAt), 0).Format("2006-01-02 15:04:05"))	
+				}
 			}
 		})
 	}

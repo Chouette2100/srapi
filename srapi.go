@@ -22,9 +22,10 @@ package srapi
 01AA00  ApiRoomEventAndSupport()の構造体を変更し、GetPointByAPI()の引数にBlockIDを追加する
 01AH00  GetPointByApi() で レベルイベントの場合は順位に レベル - 10000 を設定する
 01AH01	ApiRoomEventAndSupport()の構造体でanyをinterface{}に変更する
+01AH02  GetEventBlockRanking()でルーム数が現実のルーム数と異なる場合の処理を追加する
 
 */
-const Version = "01AH01"
+const Version = "01AH02"
 
 //	ダミーのUser-Agent
 //	var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"

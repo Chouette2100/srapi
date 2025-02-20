@@ -51,6 +51,20 @@ func TestGetEventBlockRanking(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
+		// https://showroom-live.com/event/little_love_valentine?block_id=30801
+		{
+			name: "little_love_valentine?block_id=30801",
+			args: args{
+				client:  client,
+				eventid: 38246,
+				blockid: 30801,
+				ib:      1,
+				ie:      100,
+			},
+			wantEbr: nil,
+			wantErr: false,
+		},
+		/*
 		{
 			name: "wdebutf_s1?block_id=25501",
 			args: args{
@@ -63,7 +77,6 @@ func TestGetEventBlockRanking(t *testing.T) {
 			wantEbr: nil,
 			wantErr: false,
 		},
-		/*
 		{
 			name: "TestGetEventBlockRanking",
 			args: args{

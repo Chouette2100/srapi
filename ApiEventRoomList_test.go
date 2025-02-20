@@ -32,7 +32,8 @@ func TestGetRoominfFromEventByApi(t *testing.T) {
 		// TODO: Add test cases.
 		{
 			"TestGetRoominfFromEventByApi",
-			args{http.DefaultClient, 36734, 1, 30},
+			// args{http.DefaultClient, 37367, 1, 30},
+			args{http.DefaultClient, 38256, 1, 30},
 			&RoomListInf{},
 			false,
 		}, // Add test
@@ -42,7 +43,7 @@ func TestGetRoominfFromEventByApi(t *testing.T) {
 			gotRoomlistinf, err := GetRoominfFromEventByApi(tt.args.client, tt.args.eventid, tt.args.ib, tt.args.ie)
 
 			for _, rm := range gotRoomlistinf.RoomList {
-				fmt.Printf("%3d %10d %s\n", rm.Rank, rm.Room_id, rm.Room_name )
+				fmt.Printf("%3d %10d %s point=%d\n", rm.Rank, rm.Room_id, rm.Room_name , rm.Point)
 			}
 
 			if (err != nil) != tt.wantErr {

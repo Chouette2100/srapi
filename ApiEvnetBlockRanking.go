@@ -72,6 +72,10 @@ func GetEventBlockRanking(
 			err = fmt.Errorf("ApiEventRoomList(): %w", err)
 			return nil, err
 		}
+		if len(tebr.Block_ranking_list) == 0 {
+			// 理屈としては起こり得ないが、現実には起きたことがある。
+			break
+		}
 
 		if page == 1 {
 			ebr = tebr
