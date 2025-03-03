@@ -10,8 +10,6 @@ import (
 	"os"
 	"reflect"
 	"testing"
-
-	"github.com/Chouette2100/exsrapi"
 )
 
 func TestApiCdnGiftRankingContribution(t *testing.T) {
@@ -21,7 +19,7 @@ func TestApiCdnGiftRankingContribution(t *testing.T) {
 		url_key  string
 	}
 
-	logfile, err := exsrapi.CreateLogfile("TestApiCdnGiftRanking")
+	logfile, err := CreateLogfile("TestApiCdnGiftRanking")
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}
@@ -29,9 +27,9 @@ func TestApiCdnGiftRankingContribution(t *testing.T) {
 	//	log.SetOutput(logfile)
 	log.SetOutput(io.MultiWriter(logfile, os.Stdout))
 
-	client, cookiejar, err := exsrapi.CreateNewClient("")
+	client, cookiejar, err := CreateNewClient("")
 	if err != nil {
-		log.Printf("exsrapi.CeateNewClient(): %s", err.Error())
+		log.Printf("CeateNewClient(): %s", err.Error())
 		return //	エラーがあれば、ここで終了
 	}
 	defer cookiejar.Save()

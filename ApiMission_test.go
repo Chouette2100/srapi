@@ -10,8 +10,6 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-
-	"github.com/Chouette2100/exsrapi"
 )
 
 func TestApiMission(t *testing.T) {
@@ -23,14 +21,14 @@ func TestApiMission(t *testing.T) {
 
 	//	設定ファイルを読み込む。
 	var srconfig SRConfig
-	err := exsrapi.LoadConfig("SRConfig.yml", &srconfig)
+	err := LoadConfig("SRConfig.yml", &srconfig)
 	if err != nil {
 		log.Printf("LoadConfig: %s\n", err.Error())
 		return
 	}
 
 	//	cookiejarがセットされたHTTPクライアントを作る
-	client, jar, err := exsrapi.CreateNewClient(srconfig.SRacct)
+	client, jar, err := CreateNewClient(srconfig.SRacct)
 	if err != nil {
 		log.Printf("CreateNewClient() returned error %s\n", err.Error())
 		return
@@ -39,9 +37,9 @@ func TestApiMission(t *testing.T) {
 	defer jar.Save()
 
 	//	SHOWROOMのサービスにログインし、ユーザIDを取得する。
-	_, err = exsrapi.LoginShowroom(client, srconfig.SRacct, srconfig.SRpswd)
+	_, err = LoginShowroom(client, srconfig.SRacct, srconfig.SRpswd)
 	if err != nil {
-		log.Printf("exsrapi.LoginShowroom: %s\n", err.Error())
+		log.Printf("LoginShowroom: %s\n", err.Error())
 		return
 	}
 

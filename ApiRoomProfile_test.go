@@ -7,15 +7,13 @@ import (
 	"testing"
 
 	"net/http"
-
-	"github.com/Chouette2100/exsrapi"
 )
 
 func TestApiRoomProfile(t *testing.T) {
 
-	client, cookiejar, err := exsrapi.CreateNewClient("")
+	client, cookiejar, err := CreateNewClient("")
 	if err != nil {
-		log.Printf("exsrapi.CeateNewClient(): %s", err.Error())
+		log.Printf("CeateNewClient(): %s", err.Error())
 		return //	エラーがあれば、ここで終了
 	}
 	defer cookiejar.Save()

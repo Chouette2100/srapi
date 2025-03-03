@@ -32,11 +32,26 @@ func TestGetRoominfFromEventByApi(t *testing.T) {
 		// TODO: Add test cases.
 		{
 			"TestGetRoominfFromEventByApi",
+			args{http.DefaultClient, 37539, 1, 300},
+			&RoomListInf{},
+			false,
+		}, // Add test
+		{
+			"TestGetRoominfFromEventByApi",
+			args{http.DefaultClient, 38384, 1, 300},
+			&RoomListInf{},
+			false,
+		}, // Add test
+		/*
+		/*
+		{
+			"TestGetRoominfFromEventByApi",
 			// args{http.DefaultClient, 37367, 1, 30},
 			args{http.DefaultClient, 38256, 1, 30},
 			&RoomListInf{},
 			false,
 		}, // Add test
+		*/
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

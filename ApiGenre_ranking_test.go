@@ -14,14 +14,11 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-
-	"github.com/Chouette2100/exsrapi"
-
 )
 
 func TestGetGenreRankingByApi(t *testing.T) {
 
-	logfile, err := exsrapi.CreateLogfile("ApiGenre_ranking")
+	logfile, err := CreateLogfile("ApiGenre_ranking")
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}
@@ -30,9 +27,9 @@ func TestGetGenreRankingByApi(t *testing.T) {
 	log.SetOutput(io.MultiWriter(logfile, os.Stdout))
 
 
-	client, cookiejar, err := exsrapi.CreateNewClient("")
+	client, cookiejar, err := CreateNewClient("")
 	if err != nil {
-		log.Printf("exsrapi.CeateNewClient(): %s", err.Error())
+		log.Printf("CeateNewClient(): %s", err.Error())
 		return //	エラーがあれば、ここで終了
 	}
 	defer cookiejar.Save()

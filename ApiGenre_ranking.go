@@ -17,7 +17,6 @@ import (
 
 	"net/http"
 	"net/url"
-	//	"github.com/chouette2100/exsrapi"
 )
 
 type GenreRanking struct {
