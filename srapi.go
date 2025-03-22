@@ -24,9 +24,10 @@ package srapi
 01AH01	ApiRoomEventAndSupport()の構造体でanyをinterface{}に変更する
 01AH02  GetEventBlockRanking()でルーム数が現実のルーム数と異なる場合の処理を追加する
 01AJ00  v2版 2.1.0、exsapiとの循環参照を解消する v2.1.1
+01AK00  ApiEventAbstraction()を追加する
 
 */
-const Version = "01AJ00"
+const Version = "01AK00"
 
 //	ダミーのUser-Agent
 //	var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
