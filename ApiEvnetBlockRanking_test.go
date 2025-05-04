@@ -9,13 +9,16 @@ Ver. 0.1.0
 package srapi
 
 import (
-	"log"
+	"fmt"
 	"io"
+	"log"
 	"os"
 
 	"net/http"
 	"reflect"
 	"testing"
+
+	// "golang.org/x/tools/go/analysis/passes/defers"
 )
 
 func TestGetEventBlockRanking(t *testing.T) {
@@ -49,7 +52,20 @@ func TestGetEventBlockRanking(t *testing.T) {
 		wantErr bool
 	}{
 		// TODO: Add test cases.
-		// https://showroom-live.com/event/little_love_valentine?block_id=30801
+		// https://showroom-live.com/event/ojisan_kobun_kawaii?block_id=0
+		{
+			name: "ojisan_kobun_kawaii?block_id=0",
+			args: args{
+				client:  client,
+				eventid: 38819,
+				blockid: 0,
+				ib:      1,
+				ie:      2000,
+			},
+			wantEbr: nil,
+			wantErr: false,
+		},
+		/*
 		{
 			name: "little_love_valentine?block_id=30801",
 			args: args{
@@ -62,7 +78,6 @@ func TestGetEventBlockRanking(t *testing.T) {
 			wantEbr: nil,
 			wantErr: false,
 		},
-		/*
 		{
 			name: "wdebutf_s1?block_id=25501",
 			args: args{
@@ -116,10 +131,24 @@ func TestGetEventBlockRanking(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gotEbr, err := GetEventBlockRanking(tt.args.client, tt.args.eventid, tt.args.blockid, tt.args.ib, tt.args.ie)
+			if err != nil {
+				log.Printf("GetEventBlockRanking(): %s", err.Error())
+				return
+			}
 			//	log.Printf("GetEventBlockRanking(): %+v\n%+v", err, gotEbr)
 			log.Printf("eventid= %d, block_id= %d\n", tt.args.eventid, tt.args.blockid)
-			for _, br := range(gotEbr.Block_ranking_list) {
-			log.Printf("%10s%4d%10d\n", br.Room_id, br.Rank, br.Point)
+			f, err := os.OpenFile("TestGetEventBlockRanking.txt", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+			if err != nil {
+				log.Printf("cannot open TestGetEventBlockRanking.txt: %s", err.Error())
+				return
+			}
+			defer f.Close()
+			lng := len(gotEbr.Block_ranking_list)
+			// for _, br := range(gotEbr.Block_ranking_list) {
+			for i := lng-1; i >= 0; i-- {
+				br := gotEbr.Block_ranking_list[i]
+			// log.Printf("%10s%4d%10d\n", br.Room_id, br.Rank, br.Point)
+			fmt.Fprintf(f, "%s\n", br.Room_id)
 			}
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetEventBlockRanking() error = %v, wantErr %v", err, tt.wantErr)
