@@ -1,4 +1,4 @@
-module srlib/srapi
+module github.com/Chouette2100/srapi/v2
 
 go 1.24.2
 

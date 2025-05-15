@@ -17,7 +17,6 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
-
 	// "golang.org/x/tools/go/analysis/passes/defers"
 )
 
@@ -54,7 +53,8 @@ func TestGetEventBlockRanking(t *testing.T) {
 		// TODO: Add test cases.
 		// https://showroom-live.com/event/ojisan_kobun_kawaii?block_id=0
 		{
-			name: "ojisan_kobun_kawaii?block_id=0",
+			// name: "ojisan_kobun_kawaii?block_id=0",
+			name: "2025gw_present_festival",
 			args: args{
 				client:  client,
 				eventid: 38819,
@@ -66,66 +66,66 @@ func TestGetEventBlockRanking(t *testing.T) {
 			wantErr: false,
 		},
 		/*
-		{
-			name: "little_love_valentine?block_id=30801",
-			args: args{
-				client:  client,
-				eventid: 38246,
-				blockid: 30801,
-				ib:      1,
-				ie:      100,
+			{
+				name: "little_love_valentine?block_id=30801",
+				args: args{
+					client:  client,
+					eventid: 38246,
+					blockid: 30801,
+					ib:      1,
+					ie:      100,
+				},
+				wantEbr: nil,
+				wantErr: false,
 			},
-			wantEbr: nil,
-			wantErr: false,
-		},
-		{
-			name: "wdebutf_s1?block_id=25501",
-			args: args{
-				client:  client,
-				eventid: 37430,
-				blockid: 25501,
-				ib:      1,
-				ie:      100,
+			{
+				name: "wdebutf_s1?block_id=25501",
+				args: args{
+					client:  client,
+					eventid: 37430,
+					blockid: 25501,
+					ib:      1,
+					ie:      100,
+				},
+				wantEbr: nil,
+				wantErr: false,
 			},
-			wantEbr: nil,
-			wantErr: false,
-		},
-		{
-			name: "TestGetEventBlockRanking",
-			args: args{
-				client:  client,
-				eventid: 36695,
-				blockid: 0,
-				ib:      1,
-				ie:      100,
+			{
+				name: "TestGetEventBlockRanking",
+				args: args{
+					client:  client,
+					eventid: 36695,
+					blockid: 0,
+					ib:      1,
+					ie:      100,
+				},
+				wantEbr: nil,
+				wantErr: false,
 			},
-			wantEbr: nil,
-			wantErr: false,
-		},
-		{
-			name: "TestGetEventBlockRanking",
-			args: args{
-				client:  client,
-				eventid: 36695,
-				blockid: 0,
-				ib:      1,
-				ie:      20,
+			{
+				name: "TestGetEventBlockRanking",
+				args: args{
+					client:  client,
+					eventid: 36695,
+					blockid: 0,
+					ib:      1,
+					ie:      20,
+				},
+				wantEbr: nil,
+				wantErr: false,
 			},
-			wantEbr: nil,
-			wantErr: false,
-		},
-				{
-			name: "TestGetEventBlockRanking",
-			args: args{
-				client:  client,
-				eventid: 36695,
-				blockid: 20901,
-				ib:      1,
-				ie:      200,
+					{
+				name: "TestGetEventBlockRanking",
+				args: args{
+					client:  client,
+					eventid: 36695,
+					blockid: 20901,
+					ib:      1,
+					ie:      200,
+				},
+				wantEbr: nil,
+				wantErr: false,
 			},
-			wantEbr: nil,
-			wantErr: false,
-		},
 		*/
 	}
 	for _, tt := range tests {
@@ -145,10 +145,10 @@ func TestGetEventBlockRanking(t *testing.T) {
 			defer f.Close()
 			lng := len(gotEbr.Block_ranking_list)
 			// for _, br := range(gotEbr.Block_ranking_list) {
-			for i := lng-1; i >= 0; i-- {
+			for i := lng - 1; i >= 0; i-- {
 				br := gotEbr.Block_ranking_list[i]
-			// log.Printf("%10s%4d%10d\n", br.Room_id, br.Rank, br.Point)
-			fmt.Fprintf(f, "%s\n", br.Room_id)
+				// log.Printf("%10s%4d%10d\n", br.Room_id, br.Rank, br.Point)
+				fmt.Fprintf(f, "%s\n", br.Room_id)
 			}
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetEventBlockRanking() error = %v, wantErr %v", err, tt.wantErr)
