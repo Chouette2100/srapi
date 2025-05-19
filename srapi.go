@@ -31,8 +31,9 @@ package srapi
 01AJ00  v2版 2.1.0、exsapiとの循環参照を解消する v2.1.1
 01AK00  ApiEventAbstraction()を追加する
 01AL00  ApiEventRanking(), ApiCurrentUser(), ApiGenrerankingRoomGenre()を追加する
+01AM00  ApiEventQuestRooms()を追加する
 */
-const Version = "01AL00"
+const Version = "01AM00"
 
 // ダミーのUser-Agent
 // var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
