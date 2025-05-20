@@ -32,6 +32,7 @@ type EventQuestLevelRanges struct {
 	Rooms     []Rooms `json:"rooms"`
 }
 
+// レベルイベントの参加ルームを取得する関数
 func ApiEventQuestRooms(
 	client *http.Client,
 	eventid string,
@@ -67,7 +68,10 @@ func ApiEventQuestRooms(
 
 	return eqr, nil
 }
-func GetEventQuestRooms(
+
+// レベルイベントの指定された範囲の参加ルームのリストを一つのスライスとして取得する関数
+// 参加ルームのリストは EventQuestRooms.EventQuestLevelRanges[0].Rooms に格納される
+func GetEventQuestRoomsByApi(
 	client *http.Client,
 	eventid string,
 	ib int,
@@ -99,14 +103,18 @@ func GetEventQuestRooms(
 	eqr, err = ApiEventQuestRooms(client, eventid)
 
 	for i, eqlr := range eqr.EventQuestLevelRanges {
-		if i != 0 && len(eqlr.Rooms) < ie {
+		if i != 0 {
 			eqr.EventQuestLevelRanges[0].Rooms = append(eqr.EventQuestLevelRanges[0].Rooms, eqlr.Rooms...)
+		}
+		if len(eqr.EventQuestLevelRanges[0].Rooms) >= ie {
+			break
 		}
 	}
 	if len(eqr.EventQuestLevelRanges[0].Rooms) < ie {
 		ie = len(eqr.EventQuestLevelRanges[0].Rooms)
 	}
 	eqr.EventQuestLevelRanges[0].Rooms = eqr.EventQuestLevelRanges[0].Rooms[ib-1 : ie-ib+1]
+	eqr.EventQuestLevelRanges = eqr.EventQuestLevelRanges[0:1]
 
 	return eqr, nil
 }
