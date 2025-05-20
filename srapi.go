@@ -32,9 +32,9 @@ package srapi
 01AK00  ApiEventAbstraction()を追加する
 01AL00  ApiEventRanking(), ApiCurrentUser(), ApiGenrerankingRoomGenre()を追加する
 01AM00  ApiEventQuestRooms()を追加する
-01AM01  GetEventQuestRooms()をGetEventQuestRoomsByApi()とする。GetEventQuestRoomsByApi()でルーム数のチェックを結合後に行うようにする。
+01AN00  GetEventQuestRooms()をGetEventQuestRoomsByApi()とする。GetEventQuestRoomsByApi()でルーム数のチェックを結合後に行うようにする。
 */
-const Version = "01AM00"
+const Version = "01AN00"
 
 // ダミーのUser-Agent
 // var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
