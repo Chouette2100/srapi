@@ -119,6 +119,9 @@ func MakeEventListByApi(client *http.Client, args... int) (esl []Event, err erro
 	ApiEventSearch(client, page)
 	ApiEventSearch(client, page, status)
 	 status: 1: 開催中(デフォルト)、 3: 開催予定、 4: 終了済み
+
+	 keyword string
+	 count	int
 */
 
 func ApiEventSearch(
