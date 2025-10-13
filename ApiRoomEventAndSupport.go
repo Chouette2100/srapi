@@ -193,14 +193,39 @@ func ApiRoomEventAndSupport(
 	res *RoomEvnetAndSupport, //	ファンレベルの進捗状況の詳細
 	err error, //	エラー情報
 ) {
-
 	res = &RoomEvnetAndSupport{}
+	var buf *bytes.Buffer
+
+	buf, err = JsonRoomEventAndSupport(client, roomid)
+	if err != nil {
+		err = fmt.Errorf("JsonRoomEventAndSupport(): %w", err)
+		return nil, err
+	}
+
+	//	log.Printf("buf=%s\n", buf.String())
+
+	if err = json.NewDecoder(buf).Decode(res); err != nil {
+		err = fmt.Errorf("json.NewDecoder: %w", err)
+		return nil, err
+	}
+
+	//	log.Printf("res = %+v\n", res)
+
+	return res, nil
+}
+func JsonRoomEventAndSupport(
+	client *http.Client, //	HTTPクライアント
+	roomid string, //	配信ルームの識別子（プロフィールやファンルームのURLの最後にある6桁程度の数）
+) (
+	buf *bytes.Buffer, //	JSON文字列を格納したバッファ
+	err error, //	エラー情報
+) {
 
 	turl := "https://www.showroom-live.com/api/room/event_and_support"
 	u, err := url.Parse(turl)
 	if err != nil {
 		err = fmt.Errorf("url.Parse: %w", err)
-		return res, err
+		return nil, err
 	}
 
 	// クエリを組み立て
@@ -213,7 +238,7 @@ func ApiRoomEventAndSupport(
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		err = fmt.Errorf("http.NewRequest: %w", err)
-		return res, err
+		return nil, err
 	}
 
 	// 組み立てたクエリを生クエリ文字列に変換して設定
@@ -228,24 +253,17 @@ func ApiRoomEventAndSupport(
 	resp, err := client.Do(req)
 	if err != nil {
 		err = fmt.Errorf("client.Do: %w", err)
-		return res, err
+		return nil, err
 	}
 
 	// 関数を抜ける際に接続を切断し、リソースを解放するため必ずresponse.Bodyをcloseする
 	defer resp.Body.Close()
 
-	buf := new(bytes.Buffer)
+	buf = new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
 	//	bufstr := buf.String()
 	//	log.Printf("bufstr=%s\n", bufstr)
 
-	if err = json.NewDecoder(buf).Decode(res); err != nil {
-		err = fmt.Errorf("json.NewDecoder: %w", err)
-		return nil, err
-	}
-
-	//	log.Printf("res = %+v\n", res)
-
-	return res, nil
+	return buf, nil
 
 }

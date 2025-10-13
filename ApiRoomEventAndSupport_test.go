@@ -10,7 +10,7 @@ Ver. 0.1.0 レベルイベントのRankとGapを−１とする。
 package srapi
 
 import (
-	"log"
+	// "log"
 
 	"net/http"
 	"testing"
@@ -18,12 +18,16 @@ import (
 
 func TestGetPointByApi(t *testing.T) {
 
-	client, cookiejar, err := CreateNewClient("")
-	if err != nil {
-		log.Printf("CeateNewClient(): %s", err.Error())
-		return //	エラーがあれば、ここで終了
-	}
-	defer cookiejar.Save()
+	/*
+		client, cookiejar, err := CreateNewClient("")
+		if err != nil {
+			log.Printf("CeateNewClient(): %s", err.Error())
+			return //	エラーがあれば、ここで終了
+		}
+		defer cookiejar.Save()
+	*/
+
+	client := &http.Client{}
 
 	type args struct {
 		client *http.Client
@@ -42,6 +46,21 @@ func TestGetPointByApi(t *testing.T) {
 		wantErr       bool
 	}{
 		{
+			name: "Test_552318",
+			args: args{
+				client: client,
+				roomid: 552318, // みう
+			},
+			wantPoint:     0,
+			wantRank:      -1,
+			wantGap:       -1,
+			wantEventid:   0,
+			wantEventurl:  "",
+			wantEventname: "",
+			wantBlockid:   0,
+			wantErr:       false,
+		},
+		{
 			name: "Test_239199",
 			args: args{
 				client: client,
@@ -56,36 +75,38 @@ func TestGetPointByApi(t *testing.T) {
 			wantBlockid:   0,
 			wantErr:       false,
 		},
-		{
-			name: "Test_96747",
-			args: args{
-				client: client,
-				roomid: 96747, // 無言くん
+		/*
+			{
+				name: "Test_96747",
+				args: args{
+					client: client,
+					roomid: 96747, // 無言くん
+				},
+				wantPoint:     0,
+				wantRank:      -1,
+				wantGap:       -1,
+				wantEventid:   0,
+				wantEventurl:  "",
+				wantEventname: "",
+				wantBlockid:   0,
+				wantErr:       false,
 			},
-			wantPoint:     0,
-			wantRank:      -1,
-			wantGap:       -1,
-			wantEventid:   0,
-			wantEventurl:  "",
-			wantEventname: "",
-			wantBlockid:   0,
-			wantErr:       false,
-		},
-		{
-			name: "Test_87911",
-			args: args{
-				client: client,
-				roomid: 87911, // Annnnnaの空
+			{
+				name: "Test_87911",
+				args: args{
+					client: client,
+					roomid: 87911, // Annnnnaの空
+				},
+				wantPoint:     0,
+				wantRank:      -1,
+				wantGap:       -1,
+				wantEventid:   0,
+				wantEventurl:  "",
+				wantEventname: "",
+				wantBlockid:   0,
+				wantErr:       false,
 			},
-			wantPoint:     0,
-			wantRank:      -1,
-			wantGap:       -1,
-			wantEventid:   0,
-			wantEventurl:  "",
-			wantEventname: "",
-			wantBlockid:   0,
-			wantErr:       false,
-		},
+		*/
 		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
