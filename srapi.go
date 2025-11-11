@@ -35,9 +35,22 @@ package srapi
 01AN00  GetEventQuestRooms()をGetEventQuestRoomsByApi()とする。GetEventQuestRoomsByApi()でルーム数のチェックを結合後に行うようにする。
 01AN01  GetEventQuestRoomsByApi()でApiEventQuestRooms()の戻り値をチェックし、エラーがあればnilを返すようにする。
 200305  ApiRoomEventAndSupport()のJSONを取得するまでを JsonRoomEventAndSupport() として独立させる
+200306  init()関数を追加しuseragentを設定する。CrawlContirbutionRanking(), ApiEventRooms()を追加する。
+
+[要確認]
+https://www.showroom-live.com/api/event/kvs2510/on_going_events
+https://www.showroom-live.com/api/live/onlive_num
+https://www.showroom-live.com/api/event/kvs2510/description
+https://www.showroom-live.com/api/event/kvs2510/abstraction
+https://www.showroom-live.com/api/event/kvs2510/can_apply
+https://www.showroom-live.com/api/event/besthits2025/rooms
 */
-const Version = "200305"
+const Version = "200306"
 
 // ダミーのUser-Agent
 // var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
-const useragent = "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+// const useragent = "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+var useragent string
+
+// var mailAddress = "chouette2100@gmail.com"
+var mailAddress = "+https://chouette2100.com/disp-bbs"

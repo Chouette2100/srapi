@@ -5,7 +5,6 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
 Ver. 1.1.1	Contribution_ranking.Me のtypeをanyからinterface{}に変更する。テスト用データを変更する。
-
 */
 package srapi
 
@@ -34,30 +33,41 @@ func TestApiContribution_ranking(t *testing.T) {
 			name: "test3",
 			args: args{
 				client:   nil,
-				ieventid: 36159,  //	
-				roomid:   518083, //	
+				ieventid: 40607,  //
+				roomid:   558649, //
 			},
 			wantErr: true,
 		},
 		/*
-		{
-			name: "test1",
-			args: args{
-				client:   nil,
-				ieventid: 35315,  //	
-				roomid:   417115, //	
+			{
+				name: "test3",
+				args: args{
+					client:   nil,
+					ieventid: 36159,  //
+					roomid:   518083, //
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test2",
-			args: args{
-				client:   nil,
-				ieventid: 35183,  //	まったり配信したいあなたへ♡みんなで花火を楽しもう！vol.166 
-				roomid:   408389, //	日向端ひな（高嶺のなでしこ）
+		*/
+		/*
+			{
+				name: "test1",
+				args: args{
+					client:   nil,
+					ieventid: 35315,  //
+					roomid:   417115, //
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
+			{
+				name: "test2",
+				args: args{
+					client:   nil,
+					ieventid: 35183,  //	まったり配信したいあなたへ♡みんなで花火を楽しもう！vol.166
+					roomid:   408389, //	日向端ひな（高嶺のなでしこ）
+				},
+				wantErr: true,
+			},
 		*/
 	}
 
