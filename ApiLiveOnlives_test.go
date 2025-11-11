@@ -3,8 +3,7 @@ package srapi
 import (
 	"net/http"
 	"testing"
-
-	"github.com/Chouette2100/srapi/v2"
+	// "github.com/Chouette2100/srapi/v2"
 )
 
 func TestApiLiveOnlives(t *testing.T) {
@@ -12,20 +11,20 @@ func TestApiLiveOnlives(t *testing.T) {
 		name string // description of this test case
 		// Named input parameters for target function.
 		client  *http.Client
-		want    *srapi.RoomOnlives
+		want    *RoomOnlives
 		wantErr bool
 	}{
 		// TODO: Add test cases.
 		{
 			"TestApiLiveOnlives",
 			http.DefaultClient,
-			&srapi.RoomOnlives{},
+			&RoomOnlives{},
 			false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, gotErr := srapi.ApiLiveOnlives(tt.client)
+			got, gotErr := ApiLiveOnlives(tt.client)
 			if gotErr != nil {
 				if !tt.wantErr {
 					t.Errorf("ApiLiveOnlives() failed: %v", gotErr)
