@@ -28,9 +28,9 @@ func TestGetEventRoomsByApi(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			"TestGetEventRoomsByApi",
+			"weekday_start_00",
 			client,
-			"sr_beginner_challenge_vol16x", // Example event URL key
+			"weekday_start_00", // Example event URL key
 			1,
 			10,
 			&EventRooms{},

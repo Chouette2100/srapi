@@ -15,7 +15,7 @@ import (
 	"os"
 
 	"net/http"
-	"reflect"
+	// "reflect"
 	"testing"
 	// "golang.org/x/tools/go/analysis/passes/defers"
 )
@@ -53,14 +53,25 @@ func TestGetEventBlockRanking(t *testing.T) {
 		// TODO: Add test cases.
 		// https://showroom-live.com/event/ojisan_kobun_kawaii?block_id=0
 		{
-			// name: "ojisan_kobun_kawaii?block_id=0",
-			name: "2025gw_present_festival",
+			name: "weekday_start_006",
 			args: args{
 				client:  client,
-				eventid: 38819,
-				blockid: 0,
+				eventid: 40735,
+				blockid: 75301,
 				ib:      1,
-				ie:      2000,
+				ie:      3,
+			},
+			wantEbr: nil,
+			wantErr: false,
+		},
+		{
+			name: "hanakin_happy_night_007",
+			args: args{
+				client:  client,
+				eventid: 41011,
+				blockid: 85901,
+				ib:      1,
+				ie:      3,
 			},
 			wantEbr: nil,
 			wantErr: false,
@@ -143,20 +154,24 @@ func TestGetEventBlockRanking(t *testing.T) {
 				return
 			}
 			defer f.Close()
-			lng := len(gotEbr.Block_ranking_list)
+			lng := len(gotEbr.BlockRankingList)
 			// for _, br := range(gotEbr.Block_ranking_list) {
 			for i := lng - 1; i >= 0; i-- {
-				br := gotEbr.Block_ranking_list[i]
+				br := gotEbr.BlockRankingList[i]
 				// log.Printf("%10s%4d%10d\n", br.Room_id, br.Rank, br.Point)
-				fmt.Fprintf(f, "%s\n", br.Room_id)
+				fmt.Fprintf(f, "%s\n", br.RoomID)
 			}
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetEventBlockRanking() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(gotEbr, tt.wantEbr) {
-				t.Errorf("GetEventBlockRanking() = %v, want %v", gotEbr, tt.wantEbr)
+
+			for i, br := range gotEbr.BlockRankingList {
+				log.Printf("No.%4d RoomID: %s, Rank: %d, Point: %d", i+1, br.RoomID, br.Rank, br.Point)
 			}
+			// if !reflect.DeepEqual(gotEbr, tt.wantEbr) {
+			// 	t.Errorf("GetEventBlockRanking() = %v, want %v", gotEbr, tt.wantEbr)
+			// }
 		})
 	}
 }

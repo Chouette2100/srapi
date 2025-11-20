@@ -21,27 +21,26 @@ import (
 	"encoding/json"
 )
 
-type Block_ranking struct {
+type EventBlockRanking struct {
+	TotalEntries     int                `json:"total_entries"`
+	EntriesPerPage   int                `json:"entries_per_page"`
+	CurrentPage      int                `json:"current_page"`
+	BlockRankingList []BlockRankingList `json:"block_ranking_list"`
+}
+type BlockRankingList struct {
 	//	boolとintのinterface{}型はデータ取得時にbool型として値を設定しておくこと
 	//	該当する変数を使うときは一律に if br.Is_official.(bool) { ... } のようにすればよい
-	Is_official      interface{} //	block_id != 0のとき false/true, bock_id == 0 のとき 0/1
-	Room_url_key     string
-	Room_description string
-	Image_s          string
-	Is_online        interface{} //	block_id != 0のとき false/true, bock_id == 0 のとき 0/1
-	Is_fav           bool
-	Genre_id         int
-	Point            int
-	Room_id          string
-	Rank             int
-	Room_name        string
-}
-
-type EventBlockRanking struct {
-	Total_entries      int
-	Entries_per_pages  int
-	Current_page       int
-	Block_ranking_list []Block_ranking
+	IsOfficial      interface{} `json:"is_official"`
+	RoomURLKey      string      `json:"room_url_key"`
+	RoomDescription string      `json:"room_description"`
+	ImageS          string      `json:"image_s"`
+	IsOnline        interface{} `json:"is_online"`
+	IsFav           bool        `json:"is_fav"`
+	GenreID         int         `json:"genre_id"`
+	Point           int         `json:"point"`
+	RoomID          string      `json:"room_id"`
+	Rank            int         `json:"rank"`
+	RoomName        string      `json:"room_name"`
 }
 
 // ブロックランキングイベント参加中のルーム情報の一覧を取得する。
@@ -57,7 +56,7 @@ func GetEventBlockRanking(
 ) {
 
 	ebr = new(EventBlockRanking)
-	ebr.Block_ranking_list = make([]Block_ranking, 0)
+	ebr.BlockRankingList = make([]BlockRankingList, 0)
 
 	noroom := 0
 
@@ -72,7 +71,7 @@ func GetEventBlockRanking(
 			err = fmt.Errorf("ApiEventRoomList(): %w", err)
 			return nil, err
 		}
-		if len(tebr.Block_ranking_list) == 0 {
+		if len(tebr.BlockRankingList) == 0 {
 			// 理屈としては起こり得ないが、現実には起きたことがある。
 			break
 		}
@@ -80,15 +79,15 @@ func GetEventBlockRanking(
 		if page == 1 {
 			ebr = tebr
 		} else {
-			ebr.Block_ranking_list = append(
-				ebr.Block_ranking_list,
-				tebr.Block_ranking_list...,
+			ebr.BlockRankingList = append(
+				ebr.BlockRankingList,
+				tebr.BlockRankingList...,
 			)
 		}
 
-		noroom = len(ebr.Block_ranking_list)
+		noroom = len(ebr.BlockRankingList)
 
-		if noroom == ebr.Total_entries || noroom >= ie {
+		if noroom == ebr.TotalEntries || noroom >= ie {
 			break
 		}
 
@@ -100,9 +99,9 @@ func GetEventBlockRanking(
 		if ie > noroom {
 			ie = noroom
 		}
-		ebr.Block_ranking_list = ebr.Block_ranking_list[ib-1 : ie]
+		ebr.BlockRankingList = ebr.BlockRankingList[ib-1 : ie]
 	} else {
-		ebr.Block_ranking_list = nil
+		ebr.BlockRankingList = nil
 		return
 	}
 
@@ -170,14 +169,14 @@ func ApiBlockEventRnaking(
 	//	}
 	//	今後のSHOWROOMの仕様変更の可能性を考え以下のようにしておく
 	//	最悪(?)のケースを考えるとこれでも不十分。
-	for i, br := range ebr.Block_ranking_list {
-		if vi, ok := br.Is_online.(float64); ok {
-			ebr.Block_ranking_list[i].Is_online = vi != 0
+	for i, br := range ebr.BlockRankingList {
+		if vi, ok := br.IsOnline.(float64); ok {
+			ebr.BlockRankingList[i].IsOnline = vi != 0
 		} else {
 			break
 		}
-		if vi, ok := br.Is_official.(float64); ok {
-			ebr.Block_ranking_list[i].Is_official = vi != 0
+		if vi, ok := br.IsOfficial.(float64); ok {
+			ebr.BlockRankingList[i].IsOfficial = vi != 0
 		}
 	}
 
