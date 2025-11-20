@@ -154,20 +154,20 @@ func TestGetEventBlockRanking(t *testing.T) {
 				return
 			}
 			defer f.Close()
-			lng := len(gotEbr.BlockRankingList)
+			lng := len(gotEbr.Block_ranking_list)
 			// for _, br := range(gotEbr.Block_ranking_list) {
 			for i := lng - 1; i >= 0; i-- {
-				br := gotEbr.BlockRankingList[i]
+				br := gotEbr.Block_ranking_list[i]
 				// log.Printf("%10s%4d%10d\n", br.Room_id, br.Rank, br.Point)
-				fmt.Fprintf(f, "%s\n", br.RoomID)
+				fmt.Fprintf(f, "%s\n", br.Room_id)
 			}
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetEventBlockRanking() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 
-			for i, br := range gotEbr.BlockRankingList {
-				log.Printf("No.%4d RoomID: %s, Rank: %d, Point: %d", i+1, br.RoomID, br.Rank, br.Point)
+			for i, br := range gotEbr.Block_ranking_list {
+				log.Printf("No.%4d Room_id: %s, Rank: %d, Point: %d", i+1, br.Room_id, br.Rank, br.Point)
 			}
 			// if !reflect.DeepEqual(gotEbr, tt.wantEbr) {
 			// 	t.Errorf("GetEventBlockRanking() = %v, want %v", gotEbr, tt.wantEbr)
