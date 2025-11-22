@@ -104,6 +104,15 @@ func GetEventQuestRoomsByApi(
 	if err != nil {
 		return nil, fmt.Errorf("ApiEventQuestRooms: %w", err)
 	}
+	if eqr == nil {
+		return nil, fmt.Errorf("ApiEventQuestRooms: got nil EventQuestRooms")
+	}
+	if eqr.TotalEntries == 0 {
+		return nil, fmt.Errorf("ApiEventQuestRooms: got zero TotalEntries")
+	}
+	if len(eqr.EventQuestLevelRanges) == 0 {
+		return nil, fmt.Errorf("ApiEventQuestRooms: got zero EventQuestLevelRanges")
+	}
 
 	for i, eqlr := range eqr.EventQuestLevelRanges {
 		if i != 0 {
