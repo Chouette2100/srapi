@@ -22,6 +22,18 @@ func TestGetEventQuestRooms(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
+			name: "popteen_akb48g_model",
+			args: args{
+				client:  &http.Client{},
+				eventid: "popteen_akb48g_model",
+				ib:      1,
+				ie:      20,
+				// ie:      200,
+			},
+			wantEqr: nil,
+			wantErr: false,
+		},
+		{
 			name: "donuttabetai",
 			args: args{
 				client:  &http.Client{},
@@ -98,7 +110,7 @@ func TestGetEventQuestRooms(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotEqr, err := GetEventQuestRoomsByApi(tt.args.client, tt.args.eventid, tt.args.ib, tt.args.ie)
 			if err != nil {
-				t.Logf("GetEventQuestRooms() error: %s", err.Error())
+				fmt.Printf("GetEventQuestRooms() error: %s\n", err.Error())
 				return
 			}
 			if gotEqr == nil {

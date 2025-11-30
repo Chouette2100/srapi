@@ -6,8 +6,8 @@ package srapi
 
 import (
 	"log"
-
 	"net/http"
+
 	"reflect"
 	"testing"
 )
@@ -30,15 +30,25 @@ func TestGetEventRankingByApi(t *testing.T) {
 			name: "TestGetEventRankingByApi",
 			args: args{
 				client:      &http.Client{},
-				eventUrlKey: "ojisan_kobun_kawaii",
+				eventUrlKey: "enjoykaraoke_vol176",
 				// eventUrlKey: "omusubiyokochoo_tokyo",
 				ib: 1,
-				ie: 32,
+				ie: 300,
 			},
 			wantPranking: nil,
 			wantErr:      false,
 		},
 	}
+
+	// ログファイルの作成
+	logfile, err := CreateLogfile(Version, Version)
+	if err != nil {
+		log.Printf("ログファイルの作成に失敗しました。%v\n", err)
+		return
+	}
+	defer logfile.Close()
+	// --------------------------------
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gotPranking, err := GetEventRankingByApi(tt.args.client, tt.args.eventUrlKey, tt.args.ib, tt.args.ie)

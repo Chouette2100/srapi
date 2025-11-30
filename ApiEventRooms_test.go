@@ -28,15 +28,27 @@ func TestGetEventRoomsByApi(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			"weekday_start_00",
+			"mattari_fireworks255",
 			client,
-			"weekday_start_00", // Example event URL key
+			"mattari_fireworks255", // Example event URL key
 			1,
-			10,
+			500,
 			&EventRooms{},
 			false,
 		}, // Add test case
 	}
+
+	// ログファイルの作成
+	logfile, err := CreateLogfile(Version, Version)
+	if err != nil {
+		log.Printf("ログファイルの作成に失敗しました。%v\n", err)
+		return
+	}
+	defer logfile.Close()
+	// --------------------------------
+	log.Printf("TestGetEventRoomsByApi start\n")
+	log.Printf("%+v\n", tests)
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, gotErr := GetEventRoomsByApi(tt.client, tt.eventUrlKey, tt.ib, tt.ie)

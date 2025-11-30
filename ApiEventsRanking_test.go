@@ -10,8 +10,6 @@ package srapi
 
 import (
 	"log"
-	"io"
-	"os"
 
 	"net/http"
 	"reflect"
@@ -36,125 +34,125 @@ func TestApiEventsRanking(t *testing.T) {
 			name: "test9",
 			args: args{
 				client:   nil,
-				ieventid: 37430,
-				roomid:   529999,
-				blockid:  25501,
+				ieventid: 40800,
+				roomid:   192641,
+				blockid:  -1,
 			},
 			wantErr: true,
 		},
 		/*
-		{
-			name: "test9",
-			args: args{
-				client:   nil,
-				ieventid: 36728,
-				roomid:   525511,
-				blockid:  20102,
+			{
+				name: "test9",
+				args: args{
+					client:   nil,
+					ieventid: 36728,
+					roomid:   525511,
+					blockid:  20102,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test8",
-			args: args{
-				client:   nil,
-				ieventid: 35516,
-				roomid:   504554,
-				blockid:  0,
+			{
+				name: "test8",
+				args: args{
+					client:   nil,
+					ieventid: 35516,
+					roomid:   504554,
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test7",
-			args: args{
-				client:   nil,
-				ieventid: 36368,
-				roomid:   87911,
-				blockid:  0,
+			{
+				name: "test7",
+				args: args{
+					client:   nil,
+					ieventid: 36368,
+					roomid:   87911,
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test6",
-			args: args{
-				client:   nil,
-				ieventid: 35174,
-				roomid:   467869,
-				blockid:  0,
+			{
+				name: "test6",
+				args: args{
+					client:   nil,
+					ieventid: 35174,
+					roomid:   467869,
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test5",
-			args: args{
-				client:   nil,
-				ieventid: 36414,
-				roomid:   282817,
-				blockid:  0,
+			{
+				name: "test5",
+				args: args{
+					client:   nil,
+					ieventid: 36414,
+					roomid:   282817,
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test4",
-			args: args{
-				client:   nil,
-				ieventid: 36450,
-				roomid:   507716,
-				blockid:  0,
+			{
+				name: "test4",
+				args: args{
+					client:   nil,
+					ieventid: 36450,
+					roomid:   507716,
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test3",
-			args: args{
-				client:   nil,
-				ieventid: 36142,
-				roomid:   192641,
-				blockid:  0,
+			{
+				name: "test3",
+				args: args{
+					client:   nil,
+					ieventid: 36142,
+					roomid:   192641,
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test4",
-			args: args{
-				client:   nil,
-				ieventid: 36310,
-				roomid:   87911,
-				blockid:  0,
+			{
+				name: "test4",
+				args: args{
+					client:   nil,
+					ieventid: 36310,
+					roomid:   87911,
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
 		*/
 		/*
-		{
-			name: "test1",
-			args: args{
-				client:   nil,
-				ieventid: 35221,  //	【新規枠・2nd Stage】SR限定『ホークス応援モデルオーディション～5/19～』
-				roomid:   501854, //	なおのへや
-				blockid:  0,
+			{
+				name: "test1",
+				args: args{
+					client:   nil,
+					ieventid: 35221,  //	【新規枠・2nd Stage】SR限定『ホークス応援モデルオーディション～5/19～』
+					roomid:   501854, //	なおのへや
+					blockid:  0,
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
-		{
-			name: "test2",
-			args: args{
-				client:   nil,
-				ieventid: 35074,  //	iitoJAPAN スタートダッシュイベント vol.18
-				roomid:   500695, //	椿ミヤ
-				blockid:  18101,  //	[SS-5~C-1]Aブロック
+			{
+				name: "test2",
+				args: args{
+					client:   nil,
+					ieventid: 35074,  //	iitoJAPAN スタートダッシュイベント vol.18
+					roomid:   500695, //	椿ミヤ
+					blockid:  18101,  //	[SS-5~C-1]Aブロック
+				},
+				wantErr: true,
 			},
-			wantErr: true,
-		},
 		*/
 	}
-
-	logfile, err := CreateLogfile("ApiEventsRanking")
+	// ログファイルの作成
+	logfile, err := CreateLogfile(Version)
 	if err != nil {
-		panic("cannnot open logfile: " + err.Error())
+		log.Printf("ログファイルの作成に失敗しました。%v\n", err)
+		return
 	}
 	defer logfile.Close()
-	//	log.SetOutput(logfile)
-	log.SetOutput(io.MultiWriter(logfile, os.Stdout))
+	// --------------------------------
 
 	client, cookiejar, err := CreateNewClient("")
 	if err != nil {

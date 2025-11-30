@@ -1,18 +1,17 @@
-/*!
+/*
+!
 Copyright © 2022 chouette.21.00@gmail.com
 Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 
-
 Ver. 0.0.0
 Ver. 1.0.0 戻り値 status を err に変更する。
 Ver. 2.0.0 ExtrRoomLiveByCtg()とExtrRoomLiveByGnr()をRoomOnlivesのメソッドとする。
-Ver. 2.0.1 fmt.Errorf()の %v を %w に変更する。 
+Ver. 2.0.1 fmt.Errorf()の %v を %w に変更する。
 Ver. 3.0.0 ExtrRoomLiveByCtg(), ExtrRoomLiveyypByGnr()をそれぞれExtrByCtg()、ExtrByCtg()に変更する。
 Ver. 4.0.0 ExtrByCtg()、ExtrByCtg()の引数を Roomonlives から *RoomOnLives に変更する。
 Ver. 4.1.0 上位でsort.Sort()をsort.Slice()に変更したため、sort.Sort()のためのメソッドを削除する。
 Ver. 4.1.0 ExtrByCtg()の引数を Roomonlives から *RoomOnLives に変更する（修正もれ）
-
 */
 package srapi
 
@@ -49,9 +48,10 @@ type RoomOnlives struct {
 	Bcsvr_post int
 	Bcsvr_host string
 }
-//	指定したカテゴリー（"Liver", "exLiver", "All"）のルーム一覧を作る。
-//	"All"のときでもGenre_idが0や700以上は含まないので重複はない。
-func (r *RoomOnlives)ExtrByCtg(
+
+// 指定したカテゴリー（"Liver", "exLiver", "All"）のルーム一覧を作る。
+// "All"のときでもGenre_idが0や700以上は含まないので重複はない。
+func (r *RoomOnlives) ExtrByCtg(
 	tgt string, //	カテゴリ
 ) (
 	roomlive *Lives, //	配信中ルーム情報
@@ -68,11 +68,11 @@ func (r *RoomOnlives)ExtrByCtg(
 		default:
 		}
 	}
-	return	roomlive, nil
+	return roomlive, nil
 }
 
-//	指定したジャンルのルーム一覧を作る。
-func (r *RoomOnlives)ExtrByGnr(
+// 指定したジャンルのルーム一覧を作る。
+func (r *RoomOnlives) ExtrByGnr(
 	gnr map[string]bool, //	抽出したいジャンル、mapにジャンルIDがありTrueであれば抽出する。
 ) (
 	roomlive *Lives, //	配信中ルーム情報
@@ -87,12 +87,12 @@ func (r *RoomOnlives)ExtrByGnr(
 	return roomlive, nil
 }
 
-//	配信中のルームの一覧を取得する
+// 配信中のルームの一覧を取得する
 func ApiLiveOnlives(
 	client *http.Client, //	HTTP client
 ) (
 	roomonlives *RoomOnlives, //	配信中ルームのジャンル別一覧
-	err 	error, //	エラー
+	err error, //	エラー
 ) {
 
 	turl := "https://www.showroom-live.com/api/live/onlives"
@@ -131,4 +131,3 @@ func ApiLiveOnlives(
 
 	return roomonlives, nil
 }
-
