@@ -3,11 +3,11 @@ package srapi_test
 import (
 	"log"
 	"net/http"
-	"time"
 
 	"testing"
 
 	"github.com/Chouette2100/srapi/v2"
+	"github.com/Chouette2100/srcom"
 )
 
 func TestApiLiveGiftlist(t *testing.T) {
@@ -28,7 +28,7 @@ func TestApiLiveGiftlist(t *testing.T) {
 		},
 		// TODO: Add test cases.
 	}
-	logfile, err := srapi.CreateLogfile("ApiLiveGiftlist", time.Now().Format("150405"), srapi.Version)
+	logfile, err := srcom.CreateLogfile3("ApiLiveGiftlist", srapi.Version)
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}

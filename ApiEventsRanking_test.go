@@ -14,6 +14,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/Chouette2100/srcom"
 )
 
 func TestApiEventsRanking(t *testing.T) {
@@ -31,12 +33,24 @@ func TestApiEventsRanking(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			name: "test9",
+			// name: "karaoke_vol178",
+			// name: "pienfes_2025",
+			// name: "grove_syozoku_semifinal?block_id=90501",
+			name: "hanakin_happy_night_010?block_id=0",
 			args: args{
-				client:   nil,
-				ieventid: 40800,
-				roomid:   192641,
-				blockid:  -1,
+				client: &http.Client{},
+				// ieventid: 40962,
+				// roomid:   484269,
+				// blockid:  -1,
+				// ieventid: 40882,
+				// roomid:   484269,
+				// blockid:  84001,
+				// ieventid: 40495,
+				// roomid:   562717,
+				// blockid:  90501,
+				ieventid: 41079,
+				roomid:   384631,
+				blockid:  0,
 			},
 			wantErr: true,
 		},
@@ -146,7 +160,7 @@ func TestApiEventsRanking(t *testing.T) {
 		*/
 	}
 	// ログファイルの作成
-	logfile, err := CreateLogfile(Version)
+	logfile, err := srcom.CreateLogfile3("ApiEventsRanking", Version)
 	if err != nil {
 		log.Printf("ログファイルの作成に失敗しました。%v\n", err)
 		return
@@ -166,9 +180,11 @@ func TestApiEventsRanking(t *testing.T) {
 			log.Printf("%+v\n", tt.args)
 			tt.args.client = client
 			gotPranking, err := ApiEventsRanking(tt.args.client, tt.args.ieventid, tt.args.roomid, tt.args.blockid)
+			log.Printf("EventID: %d, RoomID: %d, BlockID: %d", tt.args.ieventid, tt.args.roomid, tt.args.blockid)
 			for i, v := range gotPranking.Ranking {
-				log.Printf("Ranking[%2d]: %7d, %3d, %8d, %s\n", i, v.Room.RoomID, v.Rank, v.Point, v.Room.Name)
+				log.Printf("Ranking[%2d]: %7d, %3d, %8d, %s\n", i+1, v.Room.RoomID, v.Rank, v.Point, v.Room.Name)
 			}
+			log.Printf("End of EventID: %d, RoomID: %d, BlockID: %d", tt.args.ieventid, tt.args.roomid, tt.args.blockid)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ApiRoomStatus() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 	"testing"
-	"time"
 
 	"github.com/Chouette2100/srapi/v2"
+	"github.com/Chouette2100/srcom"
 )
 
 func TestApiLiveOnlives3(t *testing.T) {
@@ -26,7 +26,7 @@ func TestApiLiveOnlives3(t *testing.T) {
 		},
 	}
 
-	logfile, err := srapi.CreateLogfile("ApiOnlive2", time.Now().Format("150405"), srapi.Version)
+	logfile, err := srcom.CreateLogfile3("ApiOnlive3", srapi.Version)
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}

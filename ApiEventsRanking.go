@@ -49,7 +49,7 @@ type Eventranking struct {
 		Image       string `json:"image"`
 		ShowRanking int    `json:"show_ranking"`
 	} `json:"event"`
-	Errors []struct {	//	Ex. {"errors":[{"error_user_msg":"エラーが発生しました","message":"Not Found","code":1002}]}
+	Errors []struct { //	Ex. {"errors":[{"error_user_msg":"エラーが発生しました","message":"Not Found","code":1002}]}
 		ErrorUserMsg string `json:"error_user_msg"`
 		Message      string `json:"message"`
 		Code         int    `json:"code"`

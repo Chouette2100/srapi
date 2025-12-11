@@ -18,6 +18,8 @@ import (
 	// "reflect"
 	"testing"
 	// "golang.org/x/tools/go/analysis/passes/defers"
+
+	"github.com/Chouette2100/srcom"
 )
 
 func TestGetEventBlockRanking(t *testing.T) {
@@ -29,7 +31,7 @@ func TestGetEventBlockRanking(t *testing.T) {
 		ie      int
 	}
 
-	logfile, err := CreateLogfile("TestGetEventBlockRanking")
+	logfile, err := srcom.CreateLogfile3("TestGetEventBlockRanking", Version)
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}
@@ -53,90 +55,102 @@ func TestGetEventBlockRanking(t *testing.T) {
 		// TODO: Add test cases.
 		// https://showroom-live.com/event/ojisan_kobun_kawaii?block_id=0
 		{
-			name: "weekday_start_006",
+			name: "pienfes_2025",
 			args: args{
 				client:  client,
-				eventid: 40735,
-				blockid: 75301,
+				eventid: 40882,
+				blockid: 84001,
 				ib:      1,
-				ie:      3,
-			},
-			wantEbr: nil,
-			wantErr: false,
-		},
-		{
-			name: "hanakin_happy_night_007",
-			args: args{
-				client:  client,
-				eventid: 41011,
-				blockid: 85901,
-				ib:      1,
-				ie:      3,
+				ie:      500,
 			},
 			wantEbr: nil,
 			wantErr: false,
 		},
 		/*
 			{
-				name: "little_love_valentine?block_id=30801",
+				name: "weekday_start_006",
 				args: args{
 					client:  client,
-					eventid: 38246,
-					blockid: 30801,
+					eventid: 40735,
+					blockid: 75301,
 					ib:      1,
-					ie:      100,
+					ie:      3,
 				},
 				wantEbr: nil,
 				wantErr: false,
 			},
 			{
-				name: "wdebutf_s1?block_id=25501",
+				name: "hanakin_happy_night_007",
 				args: args{
 					client:  client,
-					eventid: 37430,
-					blockid: 25501,
+					eventid: 41011,
+					blockid: 85901,
 					ib:      1,
-					ie:      100,
+					ie:      3,
 				},
 				wantEbr: nil,
 				wantErr: false,
 			},
-			{
-				name: "TestGetEventBlockRanking",
-				args: args{
-					client:  client,
-					eventid: 36695,
-					blockid: 0,
-					ib:      1,
-					ie:      100,
+				{
+					name: "little_love_valentine?block_id=30801",
+					args: args{
+						client:  client,
+						eventid: 38246,
+						blockid: 30801,
+						ib:      1,
+						ie:      100,
+					},
+					wantEbr: nil,
+					wantErr: false,
 				},
-				wantEbr: nil,
-				wantErr: false,
-			},
-			{
-				name: "TestGetEventBlockRanking",
-				args: args{
-					client:  client,
-					eventid: 36695,
-					blockid: 0,
-					ib:      1,
-					ie:      20,
+				{
+					name: "wdebutf_s1?block_id=25501",
+					args: args{
+						client:  client,
+						eventid: 37430,
+						blockid: 25501,
+						ib:      1,
+						ie:      100,
+					},
+					wantEbr: nil,
+					wantErr: false,
 				},
-				wantEbr: nil,
-				wantErr: false,
-			},
-					{
-				name: "TestGetEventBlockRanking",
-				args: args{
-					client:  client,
-					eventid: 36695,
-					blockid: 20901,
-					ib:      1,
-					ie:      200,
+				{
+					name: "TestGetEventBlockRanking",
+					args: args{
+						client:  client,
+						eventid: 36695,
+						blockid: 0,
+						ib:      1,
+						ie:      100,
+					},
+					wantEbr: nil,
+					wantErr: false,
 				},
-				wantEbr: nil,
-				wantErr: false,
-			},
+				{
+					name: "TestGetEventBlockRanking",
+					args: args{
+						client:  client,
+						eventid: 36695,
+						blockid: 0,
+						ib:      1,
+						ie:      20,
+					},
+					wantEbr: nil,
+					wantErr: false,
+				},
+						{
+					name: "TestGetEventBlockRanking",
+					args: args{
+						client:  client,
+						eventid: 36695,
+						blockid: 20901,
+						ib:      1,
+						ie:      200,
+					},
+					wantEbr: nil,
+					wantErr: false,
+				},
 		*/
 	}
 	for _, tt := range tests {

@@ -1,7 +1,7 @@
 // Copyright © 2024 chouette.21.00@gmail.com
 // Released under the MIT license
 // https://opensource.org/licenses/mit-license.php
-package srapi
+package srapi_test
 
 import (
 	"io"
@@ -10,6 +10,9 @@ import (
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/Chouette2100/srapi/v2"
+	"github.com/Chouette2100/srcom"
 )
 
 func TestApiiCdnUserGiftRanking(t *testing.T) {
@@ -19,7 +22,7 @@ func TestApiiCdnUserGiftRanking(t *testing.T) {
 		limit    int
 	}
 
-	logfile, err := CreateLogfile("TestApiCdnGiftRanking")
+	logfile, err := srcom.CreateLogfile3("ApiCdnGiftRanking", srapi.Version)
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}
@@ -27,7 +30,7 @@ func TestApiiCdnUserGiftRanking(t *testing.T) {
 	//	log.SetOutput(logfile)
 	log.SetOutput(io.MultiWriter(logfile, os.Stdout))
 
-	client, cookiejar, err := CreateNewClient("")
+	client, cookiejar, err := srapi.CreateNewClient("")
 	if err != nil {
 		log.Printf("CeateNewClient(): %s", err.Error())
 		return //	エラーがあれば、ここで終了
@@ -37,7 +40,7 @@ func TestApiiCdnUserGiftRanking(t *testing.T) {
 	tests := []struct {
 		name         string
 		args         args
-		wantPranking *CdnUserGiftRanking
+		wantPranking *srapi.CdnUserGiftRanking
 		wantErr      bool
 	}{
 		{
@@ -55,7 +58,7 @@ func TestApiiCdnUserGiftRanking(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			log.Printf("%+v\n", tt.args)
-			gotPranking, err := ApiCdnGiftRanking(tt.args.client, tt.args.genre_id, tt.args.limit)
+			gotPranking, err := srapi.ApiCdnGiftRanking(tt.args.client, tt.args.genre_id, tt.args.limit)
 			if (err != nil) != tt.wantErr {
 				log.Printf("%+v\n", gotPranking.Errors)
 				t.Errorf("ApiCdnGiftRanking() error = %v, wantErr %v", err, tt.wantErr)
@@ -79,15 +82,15 @@ func TestApiCdnUserGiftRanking(t *testing.T) {
 		limit    int
 	}
 
-	logfile, err := CreateLogfile("TestApiCdnGiftRanking")
+	logfile, err := srcom.CreateLogfile3("TestApiCdnGiftRanking", srapi.Version)
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}
 	defer logfile.Close()
 	//	log.SetOutput(logfile)
-	log.SetOutput(io.MultiWriter(logfile, os.Stdout))
+	// log.SetOutput(io.MultiWriter(logfile, os.Stdout))
 
-	client, cookiejar, err := CreateNewClient("")
+	client, cookiejar, err := srapi.CreateNewClient("")
 	if err != nil {
 		log.Printf("CeateNewClient(): %s", err.Error())
 		return //	エラーがあれば、ここで終了
@@ -97,7 +100,7 @@ func TestApiCdnUserGiftRanking(t *testing.T) {
 	tests := []struct {
 		name         string
 		args         args
-		wantPranking *CdnUserGiftRanking
+		wantPranking *srapi.CdnUserGiftRanking
 		wantErr      bool
 	}{
 		{
@@ -115,7 +118,7 @@ func TestApiCdnUserGiftRanking(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotPranking, err := ApiCdnUserGiftRanking(tt.args.client, tt.args.genre_id, tt.args.limit)
+			gotPranking, err := srapi.ApiCdnUserGiftRanking(tt.args.client, tt.args.genre_id, tt.args.limit)
 			if (err != nil) != tt.wantErr {
 				log.Printf("%+v\n", gotPranking.Errors)
 				t.Errorf("ApiCdnUserGiftRanking() error = %v, wantErr %v", err, tt.wantErr)

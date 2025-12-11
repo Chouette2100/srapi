@@ -1,16 +1,19 @@
 // Copyright © 2024 chouette.21.00@gmail.com
 // Released under the MIT license
 // https://opensource.org/licenses/mit-license.php
-package srapi
+package srapi_test
 
 import (
-	"log"
 	"io"
+	"log"
 	"os"
 
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/Chouette2100/srapi/v2"
+	"github.com/Chouette2100/srcom"
 )
 
 func TestApiEventGiftRanking(t *testing.T) {
@@ -18,7 +21,7 @@ func TestApiEventGiftRanking(t *testing.T) {
 		client  *http.Client
 		gift_id int
 	}
-	logfile, err := CreateLogfile("TestGetEventBlockRanking")
+	logfile, err := srcom.CreateLogfile3("TestGetEventBlockRanking", srapi.Version)
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}
@@ -26,7 +29,7 @@ func TestApiEventGiftRanking(t *testing.T) {
 	//	log.SetOutput(logfile)
 	log.SetOutput(io.MultiWriter(logfile, os.Stdout))
 
-	client, cookiejar, err := CreateNewClient("")
+	client, cookiejar, err := srapi.CreateNewClient("")
 	if err != nil {
 		log.Printf("CeateNewClient(): %s", err.Error())
 		return //	エラーがあれば、ここで終了
@@ -36,7 +39,7 @@ func TestApiEventGiftRanking(t *testing.T) {
 	tests := []struct {
 		name         string
 		args         args
-		wantPranking *EventGiftRanking
+		wantPranking *srapi.EventGiftRanking
 		wantErr      bool
 	}{
 		{
@@ -46,13 +49,13 @@ func TestApiEventGiftRanking(t *testing.T) {
 				gift_id: 1497,
 			},
 			wantPranking: nil,
-			wantErr: false,
+			wantErr:      false,
 		},
 		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotPranking, err := ApiEventGiftRanking(tt.args.client, tt.args.gift_id)
+			gotPranking, err := srapi.ApiEventGiftRanking(tt.args.client, tt.args.gift_id)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ApiEventGiftRanking() error = %+v, wantErr %+v", err, tt.wantErr)
 				return
@@ -66,6 +69,6 @@ func TestApiEventGiftRanking(t *testing.T) {
 				}
 			}
 		})
-		
+
 	}
 }

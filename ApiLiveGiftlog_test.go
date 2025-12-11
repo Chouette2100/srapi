@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/Chouette2100/srapi/v2"
+	"github.com/Chouette2100/srcom"
 )
 
 func TestApiLiveGiftlog(t *testing.T) {
@@ -28,7 +29,7 @@ func TestApiLiveGiftlog(t *testing.T) {
 		},
 	}
 
-	logfile, err := srapi.CreateLogfile("ApiLiveGiftlog", time.Now().Format("150405"), srapi.Version)
+	logfile, err := srcom.CreateLogfile3("ApiLiveGiftlog", time.Now().Format("150405"), srapi.Version)
 	if err != nil {
 		panic("cannnot open logfile: " + err.Error())
 	}
