@@ -22,7 +22,8 @@ func TestApiLiveGiftlist(t *testing.T) {
 		{
 			"TestApiLiveGiftlist",
 			http.DefaultClient,
-			552318, // Example room ID
+			// 552318, // Example room ID
+			303895, // Example room ID
 			&srapi.LiveGiftlist{},
 			false,
 		},

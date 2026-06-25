@@ -30,27 +30,10 @@ func TestGetEventRoomsByApi(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			"enjoykaraoke_vol179",
+			// "hanakin_happy_night_010",
+			"komoritaminoru_music",
 			client,
-			"enjoykaraoke_vol179", // Example event URL key
-			1,
-			500,
-			&srapi.EventRooms{},
-			false,
-		},
-		{
-			"mattari_fireworks258",
-			client,
-			"mattari_fireworks258", // Example event URL key
-			1,
-			500,
-			&srapi.EventRooms{},
-			false,
-		},
-		{
-			"heisei_karaoke?block_id=89801",
-			client,
-			"heisei_karaoke?block_id=89801", // Example event URL key
+			"komoritaminoru_music", // Example event URL key
 			1,
 			500,
 			&srapi.EventRooms{},
@@ -58,14 +41,41 @@ func TestGetEventRoomsByApi(t *testing.T) {
 		},
 		/*
 			{
-				"mattari_fireworks255",
+				"enjoykaraoke_vol179",
 				client,
-				"mattari_fireworks255", // Example event URL key
+				"enjoykaraoke_vol179", // Example event URL key
 				1,
 				500,
-				&EventRooms{},
+				&srapi.EventRooms{},
 				false,
-			}, // Add test case
+			},
+			{
+				"mattari_fireworks258",
+				client,
+				"mattari_fireworks258", // Example event URL key
+				1,
+				500,
+				&srapi.EventRooms{},
+				false,
+			},
+			{
+				"heisei_karaoke?block_id=89801",
+				client,
+				"heisei_karaoke?block_id=89801", // Example event URL key
+				1,
+				500,
+				&srapi.EventRooms{},
+				false,
+			},
+				{
+					"mattari_fireworks255",
+					client,
+					"mattari_fireworks255", // Example event URL key
+					1,
+					500,
+					&EventRooms{},
+					false,
+				}, // Add test case
 		*/
 	}
 

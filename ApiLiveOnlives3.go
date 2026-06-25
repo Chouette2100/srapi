@@ -18,7 +18,7 @@ package srapi
 import (
 	"bytes"
 	"fmt"
-	"log"
+	// "log"
 
 	"net/http"
 	"net/url"
@@ -196,8 +196,8 @@ func ApiLiveOnlives3(
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
-	bufstr := buf.String()
-	log.Printf("bufstr=%s\n", bufstr)
+	// bufstr := buf.String()
+	// log.Printf("bufstr=%s\n", bufstr)
 
 	// roomonlives = new(RoomOnlives) //	ここで作られたRoomOnlives型の領域は参照可能な限り（関数外でも）存在します。
 	liveonlive = new(LiveOnlive) //	ここで作られたRoomOnlives型の領域は参照可能な限り（関数外でも）存在します。

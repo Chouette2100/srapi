@@ -2,9 +2,9 @@ package srapi
 
 import (
 	"log"
-	"time"
 	"reflect"
 	"testing"
+	"time"
 
 	"net/http"
 )
@@ -33,7 +33,7 @@ func TestApiRoomProfile(t *testing.T) {
 			name: "test1",
 			args: args{
 				client:  client,
-				room_id: "239199",
+				room_id: "504758",
 			},
 			wantRoominf: RoomInfAll{},
 			wantErr:     false,
@@ -42,7 +42,7 @@ func TestApiRoomProfile(t *testing.T) {
 			name: "test2",
 			args: args{
 				client:  client,
-				room_id: "999999",
+				room_id: "239199",
 			},
 			wantRoominf: RoomInfAll{},
 			wantErr:     false,
@@ -53,8 +53,8 @@ func TestApiRoomProfile(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotRoominf, err := ApiRoomProfile(tt.args.client, tt.args.room_id)
 
-			startedat := time.Unix(gotRoominf.Event.StartedAt,0).Format("2006-01-02 15:04:05")
-			log.Printf(" StartedAt = %s", startedat) 
+			startedat := time.Unix(gotRoominf.Event.StartedAt, 0).Format("2006-01-02 15:04:05")
+			log.Printf(" StartedAt = %s", startedat)
 			endedat := time.Unix(gotRoominf.Event.EndedAt, 0).Format("2006-01-02 15:04:05")
 			log.Printf(" birthday = %s", endedat)
 			// birthday := time.Unix(gotRoominf.Birthday, 0).Format("01-02")
