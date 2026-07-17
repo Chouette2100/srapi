@@ -58,6 +58,19 @@ func TestGetEventBlockRanking(t *testing.T) {
 			name: "pienfes_2025",
 			args: args{
 				client:  client,
+				eventid: 42602,
+				blockid: 202401,
+				ib:      1,
+				ie:      500,
+			},
+			wantEbr: nil,
+			wantErr: false,
+		},
+		/*
+		{
+			name: "pienfes_2025",
+			args: args{
+				client:  client,
 				eventid: 40882,
 				blockid: 84001,
 				ib:      1,
@@ -66,7 +79,6 @@ func TestGetEventBlockRanking(t *testing.T) {
 			wantEbr: nil,
 			wantErr: false,
 		},
-		/*
 			{
 				name: "weekday_start_006",
 				args: args{

@@ -18,6 +18,7 @@ package srapi
 import (
 	"bytes"
 	"fmt"
+
 	// "log"
 
 	"net/http"
@@ -207,4 +208,51 @@ func ApiLiveOnlives3(
 	}
 
 	return liveonlive, nil
+}
+
+// 配信中ルームをGenreIDで抽出して単一スライスで返却する。
+func GetLiveOnlives3(
+	client *http.Client, //	HTTP client
+	genreids []int, //	抽出対象のGenreID。nilの場合は0 < GenreID < 700を対象とする。
+) (
+	lives []Lives2, //	配信中ルームの一覧
+	err error, //	エラー
+) {
+
+	liveonlive, err := ApiLiveOnlives3(client)
+	if err != nil {
+		err = fmt.Errorf("ApiLiveOnlives3(): %w", err)
+		return nil, err
+	}
+
+	tgt := make(map[int]struct{}, len(genreids))
+	for _, genreid := range genreids {
+		tgt[genreid] = struct{}{}
+	}
+
+	for _, onlive := range liveonlive.Onlives {
+		if genreids == nil {
+			if onlive.GenreID <= 0 || onlive.GenreID >= 700 {
+				continue
+			}
+		} else {
+			if _, ok := tgt[onlive.GenreID]; !ok {
+				continue
+			}
+		}
+		lives = append(lives, onlive.Lives...)
+	}
+
+	return lives, nil
+}
+
+// 互換のため、GetLiveOnlives3()のラッパーを提供する。
+func GetLiveOnlives(
+	client *http.Client, //	HTTP client
+	genreids []int,
+) (
+	lives []Lives2, //	配信中ルームの一覧
+	err error, //	エラー
+) {
+	return GetLiveOnlives3(client, genreids)
 }

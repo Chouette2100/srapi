@@ -31,6 +31,18 @@ func TestGetEventRoomsByApi(t *testing.T) {
 		// TODO: Add test cases.
 		{
 			// "hanakin_happy_night_010",
+			"schoolaward26_start_b?block_id=202401",
+			client,
+			"schoolaward26_start_b?block_id=202401", // Example event URL key
+			1,
+			500,
+			&srapi.EventRooms{},
+			false,
+		},
+		/*
+		// TODO: Add test cases.
+		{
+			// "hanakin_happy_night_010",
 			"komoritaminoru_music",
 			client,
 			"komoritaminoru_music", // Example event URL key
@@ -39,7 +51,6 @@ func TestGetEventRoomsByApi(t *testing.T) {
 			&srapi.EventRooms{},
 			false,
 		},
-		/*
 			{
 				"enjoykaraoke_vol179",
 				client,
