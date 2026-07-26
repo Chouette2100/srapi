@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"reflect"
 	"testing"
+
+	"github.com/Chouette2100/srcom"
 )
 
 func TestApiMission(t *testing.T) {
@@ -21,7 +23,7 @@ func TestApiMission(t *testing.T) {
 
 	//	設定ファイルを読み込む。
 	var srconfig SRConfig
-	err := LoadConfig("SRConfig.yml", &srconfig)
+	err := srcom.LoadConfig("SRConfig.yml", &srconfig)
 	if err != nil {
 		log.Printf("LoadConfig: %s\n", err.Error())
 		return

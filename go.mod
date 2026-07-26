@@ -2,6 +2,8 @@ module github.com/Chouette2100/srapi/v2
 
 go 1.26.1
 
+replace github.com/Chouette2100/srcom => ../srcom
+
 require (
 	github.com/Chouette2100/srcom v0.0.2
 	github.com/PuerkitoBio/goquery v1.12.0

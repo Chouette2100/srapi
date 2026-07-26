@@ -45,6 +45,7 @@ package srapi
 200500  テスト関数をすべてrapi_testパッケージに移動する。
 200501  ApiLveOnlive3.goの不要なログ出力を削除する。
 200600  GetLiveOnlives3()、ApiLiveUpcoming()を追加する。
+200700  設定ファイルのsops暗号化を導入する。
 
 [要確認]
 https://www.showroom-live.com/api/event/kvs2510/on_going_events
@@ -54,7 +55,7 @@ https://www.showroom-live.com/api/event/kvs2510/abstraction
 https://www.showroom-live.com/api/event/kvs2510/can_apply
 https://www.showroom-live.com/api/event/besthits2025/rooms
 */
-const Version = "200600"
+const Version = "200700"
 
 // ダミーのUser-Agent
 // var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"

@@ -1,0 +1,17 @@
+SRuser: ENC[AES256_GCM,data:+yI60mfhjDU=,iv:Dxmr1QmTGieOUtMRwRhzjJoqpbPbQkxSjBs7T9AgZiQ=,tag:IkyaaZi4gbXFLd9MC7FdLg==,type:str]
+SRpswd: ENC[AES256_GCM,data:AMkqhcbkcUDIuw==,iv:ItAN5j/e+XkyRc3hamcjUhivbb6XxEHps+nmi+CeQ0M=,tag:IvWxkGkvvba0BTfUsMDrpA==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBRb09UNG9DT0lRckJIeXRp
+            VEtIL0pJTTljenByRzNwN1d2UHJTZVJzMENjClJTZDZCaDJPemQ0d0g5dkNwMUJ3
+            NndFWHRxNDBTUnhEc2NhTVVUVmpmUjAKLS0tIExtcm1CeitGbC9aSWgySFhKNWRV
+            ODk4S3J3WGk0cXF4MWNIZWdnUCs2MG8K6zHAfEJyUTRTdpQKZm60DwWjT2b2isfH
+            crx4aRkw2VIG0DnZ99N/hXhQANHukdKfRCOMOln2OLPHfH3iO1EpkQ==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age13mlf945e3emk75ys348xttw048ufq7vpgw7l94g63tl5pt03mdrsfqra2l
+    encrypted_regex: ^(SRuser|SRpswd|DBuser|DBpswd|DBname|TurnstileSiteKey|TurnstileSecretKey|IPEncryptionKeyHex)$
+    lastmodified: "2026-07-26T10:51:25Z"
+    mac: ENC[AES256_GCM,data:wpOldgLn9yXFTGfTYymFU3FdRFjQgMfs11cpy5eJnl5c//+d/u9ArmTKXifp3900U8+UUWB83zYXIjDJ7FvLvrmVMd85VgAsB1fYFD8huFC9qvcGSqQEsSmPqcXkv3y6/BUvs1ogHj+OzqQ0HXIW558aU+93sDdOS6cj6sBBIGU=,iv:TIsZK/spTMu25NejHvoYOaxR46I5TURN46DSjDszM8c=,tag:gpa7xi48DjZ7UcZxmJJd0Q==,type:str]
+    version: 3.13.1

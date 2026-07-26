@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"testing"
 	"time"
 
@@ -38,21 +37,36 @@ func TestApiActivefanNextlevel(t *testing.T) {
 	// 環境変数からアカウントとパスワードを取得する
 	/*
 	acct, pswd, err := GetAccountAndPassword()
-	if err != nil {
+	if err != nil X/f(k~X0#K{
 		log.Printf("GetAccountAndPassword(): %s", err.Error())
 		return //	エラーがあれば、ここで終了
 	}
 		*/
-	acct := "Seppina1"
-	pswd := "Dgn895=="
+	
+	var Config struct {
+        SRuser    string `yaml:"SRuser"`
+        SRpswd    string `yaml:"SRpswd"`
+	}
+	cfg := new(Config)
+	err = srcom.LoadConfig("SRConfig.yaml", cfg) 
+	if err != nil {
+		log.Printf("LoadConfig: %s\n", err.Error())
+		return
+	}
+	// acct := Config.SRuser
+	// pswd := Config.SRpswd
 
 	//	SHOWROOMのサービスにログインする。
 	var ul srapi.UserLogin
-	ul, err = srapi.ApiUserLogin(client, csrftoken, acct, pswd)
+	ul, err = srapi.ApiUserLogin(client, csrftoken, cfg.SRuser, cfg.SRpswd)
 	if err != nil {
 		err = fmt.Errorf("ApiUserLogin: %w", err)
 		return
 	} else {
+		if ul.Ok != 1 {
+			log.Printf("login failed. SRuser=%s\n", cfg.SRuser)
+			return
+		}
 		log.Printf("login status. Ok = %d User_id=%s\n", ul.Ok, ul.User_id)
 	}
 
@@ -69,7 +83,8 @@ func TestApiActivefanNextlevel(t *testing.T) {
 			name:    "test1",
 			client:  client,
 			userid:  ul.User_id,
-			roomid:  "570195",
+			// roomid:  "570195",
+			roomid: "545968",
 			want:    srapi.ActiveFanNextLevel{},
 			wantErr: false,
 		},
@@ -103,6 +118,7 @@ func TestApiActivefanNextlevel(t *testing.T) {
 	}
 }
 
+/*
 // 環境変数からアカウントとパスワードを取得する
 func GetAccountAndPassword() (
 	acct string,
@@ -118,3 +134,4 @@ func GetAccountAndPassword() (
 	}
 	return SRACCT, SRPSWD, nil
 }
+*/
