@@ -17,20 +17,20 @@ import (
 func TestApiMission(t *testing.T) {
 
 	type SRConfig struct {
-		SRacct string //	SHOWROOMのアカウント名
+		SRuser string //	SHOWROOMのアカウント名
 		SRpswd string //	SHOWROOMのパスワード
 	}
 
 	//	設定ファイルを読み込む。
 	var srconfig SRConfig
-	err := srcom.LoadConfig("SRConfig.yml", &srconfig)
+	err := srcom.LoadConfig("SRConfig.enc.yaml", &srconfig)
 	if err != nil {
 		log.Printf("LoadConfig: %s\n", err.Error())
 		return
 	}
 
 	//	cookiejarがセットされたHTTPクライアントを作る
-	client, jar, err := CreateNewClient(srconfig.SRacct)
+	client, jar, err := CreateNewClient(srconfig.SRuser)
 	if err != nil {
 		log.Printf("CreateNewClient() returned error %s\n", err.Error())
 		return
@@ -39,7 +39,7 @@ func TestApiMission(t *testing.T) {
 	defer jar.Save()
 
 	//	SHOWROOMのサービスにログインし、ユーザIDを取得する。
-	_, err = LoginShowroom(client, srconfig.SRacct, srconfig.SRpswd)
+	_, err = LoginShowroom(client, srconfig.SRuser, srconfig.SRpswd)
 	if err != nil {
 		log.Printf("LoginShowroom: %s\n", err.Error())
 		return
