@@ -75,7 +75,7 @@ func TestGetLiveOnlives3(t *testing.T) {
 		{
 			"TestGetLiveOnlives3",
 			http.DefaultClient,
-			nil,
+			[]int{104},
 			[]srapi.Lives2{},
 			false,
 		},
