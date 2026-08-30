@@ -48,6 +48,7 @@ package srapi
 200700  設定ファイルのsops暗号化を導入する(0)
 200701  設定ファイルのsops暗号化を導入する(1)
 200800  ApiLivePostLiveComment()を追加する
+200801  ApiLivePostLiveComment()のliveidをstringからintに変更する
 
 [要確認]
 https://www.showroom-live.com/api/event/kvs2510/on_going_events
@@ -57,7 +58,7 @@ https://www.showroom-live.com/api/event/kvs2510/abstraction
 https://www.showroom-live.com/api/event/kvs2510/can_apply
 https://www.showroom-live.com/api/event/besthits2025/rooms
 */
-const Version = "200800"
+const Version = "200801"
 
 // ダミーのUser-Agent
 // var useragent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36"
